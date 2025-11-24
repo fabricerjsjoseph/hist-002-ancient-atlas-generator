@@ -1,26 +1,87 @@
-# Fantasy Map Generator
+# Ancient Atlas Generator
 
-Azgaar's _Fantasy Map Generator_ is a free web application that helps fantasy writers, game masters, and cartographers create and edit fantasy maps.
+A transformation of Azgaar's _Fantasy Map Generator_ into a tool for creating historically-accurate maps of ancient civilizations from the Bronze Age through Classical Antiquity.
 
-Link: [azgaar.github.io/Fantasy-Map-Generator](https://azgaar.github.io/Fantasy-Map-Generator).
+**Original Project:** [Fantasy Map Generator](https://azgaar.github.io/Fantasy-Map-Generator)
 
-Refer to the [project wiki](https://github.com/Azgaar/Fantasy-Map-Generator/wiki) for guidance. The current progress is tracked in [Trello](https://trello.com/b/7x832DG4/fantasy-map-generator). Some details are covered in my old blog [_Fantasy Maps for fun and glory_](https://azgaar.wordpress.com).
+## Documentation
 
-[![preview](https://github.com/Azgaar/Fantasy-Map-Generator/assets/26469650/9502eae9-92e0-4d0d-9f17-a2ba4a565c01)](https://github.com/Azgaar/Fantasy-Map-Generator/assets/26469650/11a42446-4bd5-4526-9cb1-3ef97c868992)
+This project uses the [Diataxis framework](https://diataxis.fr/) for documentation organization:
 
-[![preview](https://github.com/Azgaar/Fantasy-Map-Generator/assets/26469650/e751a9e5-7986-4638-b8a9-362395ef7583)](https://github.com/Azgaar/Fantasy-Map-Generator/assets/26469650/e751a9e5-7986-4638-b8a9-362395ef7583)
+📖 **[Complete Documentation](./docs/)** - Start here for all documentation
 
-[![preview](https://github.com/Azgaar/Fantasy-Map-Generator/assets/26469650/b0d0efde-a0d1-4e80-8818-ea3dd83c2323)](https://github.com/Azgaar/Fantasy-Map-Generator/assets/26469650/b0d0efde-a0d1-4e80-8818-ea3dd83c2323)
+### Quick Links
+
+- 📚 [Tutorials](./docs/tutorials/) - Learn by doing
+- 🔧 [How-To Guides](./docs/how-to/) - Accomplish specific tasks
+- 📖 [Reference](./docs/reference/) - Technical specifications
+  - 🔄 [Conversion Plans](./docs/reference/conversion/) - Implementation roadmap for developers
+- 💡 [Explanation](./docs/explanation/) - Understand the concepts
+
+### For Developers
+
+If you're implementing the Ancient Atlas conversion:
+- Start with the **[Implementation Roadmap](./docs/reference/conversion/IMPLEMENTATION_ROADMAP.md)** for session-specific tasks
+- Reference the **[Ancient Atlas Analysis](./docs/reference/conversion/ANCIENT_ATLAS_ANALYSIS.md)** for detailed technical guidance
+- See **[Conversion README](./docs/reference/conversion/README.md)** for implementation workflow
+
+## About This Project
+
+This repository is transforming the Fantasy Map Generator into an Ancient Atlas Generator capable of creating maps of real ancient civilizations including:
+
+**Bronze Age (3300-1200 BCE):** Sumerian, Egyptian, Minoan, Hittite, Mycenaean
+
+**Classical Age (800 BCE - 500 CE):** Greek, Roman, Persian, Carthaginian, Celtic
+
+The transformation maintains full backward compatibility with the original fantasy generation while adding historical accuracy, authentic naming, period-appropriate political systems, and ancient cartography aesthetics.
+
+## Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/fabricerjsjoseph/hist-002-ancient-atlas-generator.git
+
+# Navigate to the directory
+cd hist-002-ancient-atlas-generator
+
+# Start a local HTTP server
+python3 -m http.server 8000
+
+# Open in your browser
+# Navigate to http://localhost:8000
+```
+
+## Original Project Links
+
+- **Original Application:** [azgaar.github.io/Fantasy-Map-Generator](https://azgaar.github.io/Fantasy-Map-Generator)
+- **Project Wiki:** [Fantasy Map Generator Wiki](https://github.com/Azgaar/Fantasy-Map-Generator/wiki)
+- **Original Blog:** [Fantasy Maps for fun and glory](https://azgaar.wordpress.com)
+
+## Community
 
 Join our [Discord server](https://discordapp.com/invite/X7E84HU) and [Reddit community](https://www.reddit.com/r/FantasyMapGenerator) to share your creations, discuss the Generator, suggest ideas and get the most recent updates.
 
-Contact me via [email](mailto:azgaar.fmg@yandex.com) if you have non-public suggestions. For bug reports please use [GitHub issues](https://github.com/Azgaar/Fantasy-Map-Generator/issues) or _#fmg-bugs_ channel on Discord. If you are facing performance issues, please read [the tips](https://github.com/Azgaar/Fantasy-Map-Generator/wiki/Tips#performance-tips).
+For bug reports, please use [GitHub issues](https://github.com/Azgaar/Fantasy-Map-Generator/issues) or _#fmg-bugs_ channel on Discord.
 
-Pull requests are highly welcomed. The codebase is messy and requires re-design. I will appreciate if you start with minor changes. Check out the [data model](https://github.com/Azgaar/Fantasy-Map-Generator/wiki/Data-model) before contributing.
+## Contributing
 
-You can support the project on [Patreon](https://www.patreon.com/azgaar).
+Pull requests are highly welcomed! The project uses the [Diataxis documentation framework](./docs/) to organize information for different user needs.
 
-_Inspiration:_
+For implementation work on the Ancient Atlas conversion, see the [conversion reference documentation](./docs/reference/conversion/).
+
+## License
+
+Same as original Fantasy Map Generator (MIT License).
+
+## Credits & Inspiration
+
+**Original Application:** Azgaar's Fantasy Map Generator
+- Support the original project on [Patreon](https://www.patreon.com/azgaar)
+- Contact original creator: [azgaar.fmg@yandex.com](mailto:azgaar.fmg@yandex.com)
+
+**Ancient Atlas Transformation:** Ancient Atlas Generator Project (November 2024)
+
+**Inspiration:**
 
 - Martin O'Leary's [_Generating fantasy maps_](https://mewo2.com/notes/terrain)
 
