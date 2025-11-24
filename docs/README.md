@@ -2,6 +2,8 @@
 
 This documentation follows the [Diataxis framework](https://diataxis.fr/), organizing content into four distinct categories based on user needs.
 
+📄 **[Quick Reference](./QUICK_REFERENCE.md)** | 🤝 **[Contributing Guide](./CONTRIBUTING.md)**
+
 ## Documentation Structure
 
 ### 📚 [Tutorials](./tutorials/)
