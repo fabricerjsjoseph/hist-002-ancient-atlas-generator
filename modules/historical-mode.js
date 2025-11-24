@@ -96,15 +96,26 @@ window.HistoricalMode = (function() {
     // Load civilization data for a period
     loadPeriodCivilizations: function(periodId) {
       const period = window.HistoricalPeriods[periodId];
-      if (!period) return;
+      if (!period) {
+        WARN && console.warn(`Historical period '${periodId}' not found for loading civilizations`);
+        return;
+      }
       
       period.civilizations.forEach(civId => {
-        if (civilizationDataMap[civId]) {
-          const civData = civilizationDataMap[civId]();
-          if (civData) {
-            loadedCivilizations[civId] = civData;
-            INFO && console.log(`Loaded civilization: ${civData.name}`);
+        try {
+          if (civilizationDataMap[civId]) {
+            const civData = civilizationDataMap[civId]();
+            if (civData) {
+              loadedCivilizations[civId] = civData;
+              INFO && console.log(`Loaded civilization: ${civData.name}`);
+            } else {
+              WARN && console.warn(`Civilization data for '${civId}' is null or undefined`);
+            }
+          } else {
+            WARN && console.warn(`No data map entry for civilization '${civId}'`);
           }
+        } catch (error) {
+          ERROR && console.error(`Failed to load civilization '${civId}':`, error);
         }
       });
       
@@ -117,7 +128,10 @@ window.HistoricalMode = (function() {
       if (!Array.isArray(civIds)) civIds = [civIds];
       
       const period = window.HistoricalPeriods[currentPeriod];
-      if (!period) return;
+      if (!period) {
+        WARN && console.warn(`Cannot select civilizations: current period '${currentPeriod}' not found`);
+        return;
+      }
       
       // Filter to only valid civilizations for the current period
       selectedCivilizations = civIds.filter(id => period.civilizations.includes(id));

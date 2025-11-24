@@ -14,7 +14,7 @@ window.CivilizationCeltic = {
   // Leader titles and naming
   ruleTitles: ["Vercingetorix", "Rix", "Brennus", "Chieftain", "High King"],
   leaderNames: {
-    male: ["Vercingetorix", "Brennus", "Ambiorix", "Dumnorix", "Commius", "Indutiomarus", "Cassivellaunus", "Caratacus", "Boudicca"],
+    male: ["Vercingetorix", "Brennus", "Ambiorix", "Dumnorix", "Commius", "Indutiomarus", "Cassivellaunus", "Caratacus", "Cunobelinus"],
     female: ["Boudicca", "Cartimandua", "Medb", "Scathach", "Brigid"]
   },
   dynastyNames: ["Arverni", "Aedui", "Sequani", "Belgae", "Iceni", "Brigantes"],

@@ -1337,7 +1337,7 @@ function updateCivilizationOptions(periodId) {
     
     // Select all Bronze Age civilizations by default
     Array.from(civSelect.options).forEach(opt => {
-      if (opt.parentElement.id === "bronzeAgeCivOptions") {
+      if (opt.parentElement?.id === "bronzeAgeCivOptions") {
         opt.selected = true;
       }
     });
@@ -1347,7 +1347,7 @@ function updateCivilizationOptions(periodId) {
     
     // Select all Classical civilizations by default
     Array.from(civSelect.options).forEach(opt => {
-      if (opt.parentElement.id === "classicalCivOptions") {
+      if (opt.parentElement?.id === "classicalCivOptions") {
         opt.selected = true;
       }
     });
@@ -1376,7 +1376,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const mapModeSelect = byId("mapModeSelect");
   if (mapModeSelect) {
     const storedMode = localStorage.getItem("mapMode");
-    if (storedMode) {
+    // Validate stored mode before applying
+    if (storedMode && (storedMode === "fantasy" || storedMode === "historical")) {
       mapModeSelect.value = storedMode;
       handleMapModeChange(storedMode);
     }
