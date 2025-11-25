@@ -1266,3 +1266,120 @@ function undraw() {
   notes = [];
   unfog();
 }
+
+// Historical Mode UI Handlers
+function handleMapModeChange(mode) {
+  const historicalPeriodRow = byId("historicalPeriodRow");
+  const historicalCivRow = byId("historicalCivRow");
+  
+  if (mode === "historical") {
+    historicalPeriodRow.style.display = "table-row";
+    historicalCivRow.style.display = "table-row";
+    
+    // Enable historical mode with default period
+    const periodSelect = byId("historicalPeriodSelect");
+    if (window.HistoricalMode) {
+      window.HistoricalMode.enable(periodSelect.value);
+      updateCivilizationOptions(periodSelect.value);
+    }
+    
+    // Auto-select antique cultures set for historical mode
+    const culturesSetSelect = byId("culturesSet");
+    if (culturesSetSelect) {
+      culturesSetSelect.value = "antique";
+    }
+    
+    INFO && console.log("Switched to Historical Mode");
+  } else {
+    historicalPeriodRow.style.display = "none";
+    historicalCivRow.style.display = "none";
+    
+    if (window.HistoricalMode) {
+      window.HistoricalMode.disable();
+    }
+    
+    INFO && console.log("Switched to Fantasy Mode");
+  }
+}
+
+function handleHistoricalPeriodChange(periodId) {
+  if (window.HistoricalMode && window.HistoricalMode.isEnabled()) {
+    window.HistoricalMode.enable(periodId);
+    updateCivilizationOptions(periodId);
+    
+    // Update year to match period
+    const settings = window.HistoricalMode.getRecommendedSettings();
+    if (settings) {
+      const yearInput = byId("yearInput");
+      const eraInput = byId("eraInput");
+      if (yearInput) yearInput.value = settings.year;
+      if (eraInput) eraInput.value = settings.era;
+    }
+    
+    INFO && console.log(`Changed historical period to: ${periodId}`);
+  }
+}
+
+function updateCivilizationOptions(periodId) {
+  const civSelect = byId("historicalCivSelect");
+  if (!civSelect) return;
+  
+  // Clear all selections
+  Array.from(civSelect.options).forEach(opt => opt.selected = false);
+  
+  // Show/hide relevant optgroups based on period
+  const bronzeAgeGroup = byId("bronzeAgeCivOptions");
+  const classicalGroup = byId("classicalCivOptions");
+  
+  if (periodId === "bronzeAge") {
+    if (bronzeAgeGroup) bronzeAgeGroup.style.display = "block";
+    if (classicalGroup) classicalGroup.style.display = "none";
+    
+    // Select all Bronze Age civilizations by default
+    Array.from(civSelect.options).forEach(opt => {
+      if (opt.parentElement?.id === "bronzeAgeCivOptions") {
+        opt.selected = true;
+      }
+    });
+  } else if (periodId === "classical") {
+    if (bronzeAgeGroup) bronzeAgeGroup.style.display = "none";
+    if (classicalGroup) classicalGroup.style.display = "block";
+    
+    // Select all Classical civilizations by default
+    Array.from(civSelect.options).forEach(opt => {
+      if (opt.parentElement?.id === "classicalCivOptions") {
+        opt.selected = true;
+      }
+    });
+  }
+  
+  // Update the HistoricalMode with selected civilizations
+  handleCivilizationSelectionChange();
+}
+
+function handleCivilizationSelectionChange() {
+  const civSelect = byId("historicalCivSelect");
+  if (!civSelect || !window.HistoricalMode) return;
+  
+  const selectedCivs = Array.from(civSelect.selectedOptions).map(opt => opt.value);
+  window.HistoricalMode.selectCivilizations(selectedCivs);
+}
+
+// Add event listener for civilization selection changes
+document.addEventListener("DOMContentLoaded", () => {
+  const civSelect = byId("historicalCivSelect");
+  if (civSelect) {
+    civSelect.addEventListener("change", handleCivilizationSelectionChange);
+  }
+  
+  // Initialize map mode from stored value
+  const mapModeSelect = byId("mapModeSelect");
+  if (mapModeSelect) {
+    const storedMode = localStorage.getItem("mapMode");
+    // Validate stored mode before applying
+    if (storedMode && (storedMode === "fantasy" || storedMode === "historical")) {
+      mapModeSelect.value = storedMode;
+      handleMapModeChange(storedMode);
+    }
+  }
+});

@@ -1623,6 +1623,62 @@
               </td>
             </tr>
 
+            <tr data-tip="Enable Historical Mode to generate maps based on ancient civilizations">
+              <td>
+                <i class="icon-globe"></i>
+              </td>
+              <td>Map Mode</td>
+              <td>
+                <select id="mapModeSelect" data-stored="mapMode" onchange="handleMapModeChange(this.value)">
+                  <option value="fantasy" selected>Fantasy</option>
+                  <option value="historical">Historical</option>
+                </select>
+              </td>
+              <td></td>
+            </tr>
+
+            <tr id="historicalPeriodRow" data-tip="Select historical time period" style="display: none">
+              <td>
+                <i class="icon-clock"></i>
+              </td>
+              <td>Time Period</td>
+              <td>
+                <select id="historicalPeriodSelect" data-stored="historicalPeriod" onchange="handleHistoricalPeriodChange(this.value)">
+                  <option value="bronzeAge">Bronze Age (3300-1200 BCE)</option>
+                  <option value="classical">Classical Age (800 BCE - 500 CE)</option>
+                </select>
+              </td>
+              <td></td>
+            </tr>
+
+            <tr id="historicalCivRow" data-tip="Select specific civilizations or use all from the period" style="display: none">
+              <td>
+                <i class="icon-users"></i>
+              </td>
+              <td>Civilizations</td>
+              <td>
+                <select id="historicalCivSelect" data-stored="historicalCiv" multiple style="height: 60px">
+                  <optgroup label="Bronze Age" id="bronzeAgeCivOptions">
+                    <option value="egyptian">Egyptian</option>
+                    <option value="sumerian">Sumerian</option>
+                    <option value="minoan">Minoan</option>
+                    <option value="hittite">Hittite</option>
+                    <option value="mycenaean">Mycenaean</option>
+                  </optgroup>
+                  <optgroup label="Classical Age" id="classicalCivOptions">
+                    <option value="greek">Greek</option>
+                    <option value="roman">Roman</option>
+                    <option value="persian">Persian</option>
+                    <option value="carthaginian">Carthaginian</option>
+                    <option value="celtic">Celtic</option>
+                  </optgroup>
+                </select>
+              </td>
+              <td data-tip="Select multiple civilizations by holding Ctrl/Cmd">
+                <i class="icon-info"></i>
+              </td>
+            </tr>
+
             <tr data-tip="Select template or precreated heightmap to be used on generation">
               <td>
                 <i data-locked="0" id="lock_template" class="icon-lock-open"></i>
@@ -8091,6 +8147,19 @@
     <script src="modules/voronoi.js"></script>
     <script src="config/heightmap-templates.js"></script>
     <script src="config/precreated-heightmaps.js"></script>
+    <!-- Historical Mode Files -->
+    <script src="config/historical-periods.js?v=1.0.0"></script>
+    <script src="data/civilizations/egyptian.js?v=1.0.0"></script>
+    <script src="data/civilizations/sumerian.js?v=1.0.0"></script>
+    <script src="data/civilizations/minoan.js?v=1.0.0"></script>
+    <script src="data/civilizations/hittite.js?v=1.0.0"></script>
+    <script src="data/civilizations/mycenaean.js?v=1.0.0"></script>
+    <script src="data/civilizations/greek.js?v=1.0.0"></script>
+    <script src="data/civilizations/roman.js?v=1.0.0"></script>
+    <script src="data/civilizations/persian.js?v=1.0.0"></script>
+    <script src="data/civilizations/carthaginian.js?v=1.0.0"></script>
+    <script src="data/civilizations/celtic.js?v=1.0.0"></script>
+    <script src="modules/historical-mode.js?v=1.0.0"></script>
     <script src="modules/heightmap-generator.js?v=1.99.00"></script>
     <script src="modules/features.js?v=1.104.0"></script>
     <script src="modules/ocean-layers.js?v=1.108.4"></script>
