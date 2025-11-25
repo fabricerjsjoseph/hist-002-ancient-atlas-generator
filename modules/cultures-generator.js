@@ -358,7 +358,8 @@ window.Cultures = (function () {
           odd: 1,
           sort: config.sort,
           shield: config.shield,
-          civilization: randomCivId
+          civilization: randomCivId,
+          expansionism: config.expansionism
         });
       }
     }

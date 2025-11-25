@@ -100,7 +100,7 @@ window.HistoricalNamePatterns = {
       male: [
         "Ramesses", "Thutmose", "Amenhotep", "Akhenaten", "Seti",
         "Khufu", "Khafre", "Menkaure", "Sneferu", "Djoser",
-        "Hatshepsut", "Horemheb", "Ahmose", "Psamtik", "Necho"
+        "Horemheb", "Ahmose", "Psamtik", "Necho", "Merenptah"
       ],
       female: [
         "Nefertiti", "Cleopatra", "Hatshepsut", "Nefertari", "Tiye",
