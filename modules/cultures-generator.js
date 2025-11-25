@@ -224,6 +224,156 @@ window.Cultures = (function () {
     });
   };
 
+  // Generate cultures based on historical civilizations
+  const generateHistoricalCultures = function(count) {
+    const selectedCivs = window.HistoricalMode.getSelectedCivilizations();
+    const loadedCivs = window.HistoricalMode.getLoadedCivilizations();
+    const cells = pack.cells;
+    const s = cells.s;
+    const sMax = d3.max(s);
+    const t = cells.t;
+    const h = cells.h;
+    const temp = grid.cells.temp;
+
+    // Sorting helper functions
+    const n = cell => Math.ceil((s[cell] / sMax) * 3);
+    const td = (cell, goal) => {
+      const d = Math.abs(temp[cells.g[cell]] - goal);
+      return d ? d + 1 : 1;
+    };
+    const bd = (cell, biomes, fee = 4) => (biomes.includes(cells.biome[cell]) ? 1 : fee);
+    const sf = (cell, fee = 4) =>
+      cells.haven[cell] && pack.features[cells.f[cells.haven[cell]]].type !== "lake" ? 1 : fee;
+    const rf = (cell, fee = 4) => cells.r[cell] ? 1 : fee; // river fee
+
+    const cultures = [];
+
+    // Map civilization IDs to culture configurations
+    const civConfigs = {
+      greek: {
+        nameBase: 7,
+        shield: "boeotian",
+        sort: i => (n(i) / td(i, 18) / sf(i)) * h[i],
+        expansionism: 0.6
+      },
+      roman: {
+        nameBase: 8,
+        shield: "roman",
+        sort: i => n(i) / td(i, 15) / t[i],
+        expansionism: 0.8
+      },
+      egyptian: {
+        nameBase: 23,
+        shield: "oval",
+        sort: i => n(i) / td(i, 25) / rf(i),
+        expansionism: 0.5
+      },
+      sumerian: {
+        nameBase: 23,
+        shield: "diamond",
+        sort: i => n(i) / td(i, 22) / rf(i) / bd(i, [1, 2, 3]),
+        expansionism: 0.4
+      },
+      persian: {
+        nameBase: 24,
+        shield: "round",
+        sort: i => (n(i) / td(i, 18)) * h[i],
+        expansionism: 0.85
+      },
+      carthaginian: {
+        nameBase: 42,
+        shield: "oval",
+        sort: i => n(i) / td(i, 20) / sf(i),
+        expansionism: 0.7
+      },
+      celtic: {
+        nameBase: 22,
+        shield: "vesicaPiscis",
+        sort: i => n(i) / td(i, 11) ** 0.5 / bd(i, [6, 8]),
+        expansionism: 0.5
+      },
+      minoan: {
+        nameBase: 7,
+        shield: "round",
+        sort: i => n(i) / td(i, 18) / sf(i),
+        expansionism: 0.6
+      },
+      hittite: {
+        nameBase: 16,
+        shield: "round",
+        sort: i => (n(i) / td(i, 15)) * h[i],
+        expansionism: 0.65
+      },
+      mycenaean: {
+        nameBase: 7,
+        shield: "boeotian",
+        sort: i => (n(i) / td(i, 16) / sf(i)) * h[i],
+        expansionism: 0.55
+      }
+    };
+
+    // Generate cultures for each selected civilization
+    for (const civId of selectedCivs) {
+      const civData = loadedCivs[civId];
+      const config = civConfigs[civId];
+
+      if (!civData || !config) continue;
+
+      // Determine how many cultures to generate for this civilization
+      const civCount = Math.max(1, Math.floor(count / selectedCivs.length));
+
+      for (let j = 0; j < civCount; j++) {
+        // Get name from civilization data or generate one
+        let cultureName;
+        if (civData.name) {
+          cultureName = civData.name + (j > 0 ? ` ${romanNumeral(j + 1)}` : "");
+        } else {
+          cultureName = Names.getBaseShort(config.nameBase);
+        }
+
+        cultures.push({
+          name: cultureName,
+          base: config.nameBase,
+          odd: 1,
+          sort: config.sort,
+          shield: config.shield,
+          civilization: civId,
+          expansionism: config.expansionism
+        });
+
+        if (cultures.length >= count) break;
+      }
+
+      if (cultures.length >= count) break;
+    }
+
+    // Fill remaining slots with random civilizations if needed
+    while (cultures.length < count && selectedCivs.length > 0) {
+      const randomCivId = selectedCivs[Math.floor(Math.random() * selectedCivs.length)];
+      const config = civConfigs[randomCivId];
+      if (config) {
+        cultures.push({
+          name: Names.getBaseShort(config.nameBase),
+          base: config.nameBase,
+          odd: 1,
+          sort: config.sort,
+          shield: config.shield,
+          civilization: randomCivId,
+          expansionism: config.expansionism
+        });
+      }
+    }
+
+    INFO && console.log(`Generated ${cultures.length} historical cultures from ${selectedCivs.length} civilizations`);
+    return cultures;
+  };
+
+  // Helper function for Roman numerals
+  function romanNumeral(num) {
+    const numerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+    return numerals[num - 1] || num.toString();
+  }
+
   const getDefault = function (count) {
     // generic sorting functions
     const cells = pack.cells,
@@ -461,6 +611,11 @@ window.Cultures = (function () {
         const name = Names.getBaseShort(rnd);
         return {name, base: rnd, odd: 1, shield: getRandomShield()};
       });
+    }
+
+    // Historical mode - generate cultures based on selected civilizations
+    if (window.HistoricalMode && window.HistoricalMode.isEnabled()) {
+      return generateHistoricalCultures(count);
     }
 
     // all-world

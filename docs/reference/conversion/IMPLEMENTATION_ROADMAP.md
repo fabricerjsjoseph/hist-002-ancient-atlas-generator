@@ -28,7 +28,7 @@ Transform Fantasy Map Generator into Ancient Atlas Generator across 20 agent ses
 | Phase | Sessions | Goal | Key Deliverables | Status |
 |-------|----------|------|------------------|--------|
 | **1** | 1-2 | Historical Data Foundation | Civilization database, time period selector, historical mode toggle | ✅ COMPLETE |
-| **2** | 3-4 | Cultural & Naming | Historical cultures, authentic naming (Greek polis, Roman cities, etc.) | 🔲 Pending |
+| **2** | 3-4 | Cultural & Naming | Historical cultures, authentic naming (Greek polis, Roman cities, etc.) | ✅ COMPLETE |
 | **3** | 5-6 | Political Systems | City-states, empires, dynasties, vassal relationships | 🔲 Pending |
 | **4** | 7-8 | Historical Geography | Ancient biomes, trade routes, landmarks (pyramids, ziggurats) | 🔲 Pending |
 | **5** | 9-10 | Religion & Society | Historical pantheons, temples, religious spread | 🔲 Pending |
@@ -81,15 +81,52 @@ Transform Fantasy Map Generator into Ancient Atlas Generator across 20 agent ses
 ### Module Files (All ✅ Created)
 - ✅ `modules/historical-mode.js` - Core historical mode logic
 
+## Phase 2 Implementation Details (✅ COMPLETE)
+
+### Files Created (Phase 2)
+- ✅ `data/historical-name-patterns.js` - Historical name patterns for all civilizations
+- ✅ `modules/historical-names.js` - Leader/dynasty naming utilities
+
+### Files Modified (Phase 2)
+- ✅ `modules/cultures-generator.js` - Added `generateHistoricalCultures()` function
+- ✅ `index.html` - Added script loading for new files
+- ✅ `versioning.js` - Updated to v1.108.13
+
+### What Was Implemented
+
+1. **Historical Name Patterns** (`data/historical-name-patterns.js`)
+   - City naming patterns (prefixes, suffixes, geographic modifiers)
+   - Leader name databases for all 10 civilizations
+   - Title patterns (Pharaoh, Caesar, Archon, etc.)
+   - Dynasty naming patterns
+
+2. **Historical Names Module** (`modules/historical-names.js`)
+   - `getLeader()` - Get leader name with title
+   - `getLeaderName()` - Get leader name only
+   - `getDynasty()` - Get dynasty name
+   - `getCity()` - Generate civilization-specific city name
+   - `getRomanFullName()` - Generate Roman tria nomina
+   - `getTitle()` - Get ruler title
+   - `getStateName()` - Generate state/province name
+   - `getLeaderEpithet()` - Get epithets like "the Great"
+   - `getFullRulerName()` - Complete ruler name with title and epithet
+
+3. **Historical Cultures Generator** (in `modules/cultures-generator.js`)
+   - Integrated with HistoricalMode to detect when historical mode is active
+   - Generates cultures based on selected civilizations
+   - Each civilization has specific:
+     - Name base (linked to existing name generator)
+     - Shield type
+     - Sorting function (geographic preferences)
+     - Expansionism rate
+
 ## Files to Create (Future Phases)
 
 ### Data Files (Pending)
 - 🔲 `data/historical-pantheons.js`
 - 🔲 `data/ancient-military-units.js`
-- 🔲 `data/historical-name-patterns.js`
 
 ### Module Files (Pending)
-- 🔲 `modules/historical-names.js` - Leader/dynasty naming
 - 🔲 `modules/political-systems.js` - Government types
 - 🔲 `modules/dynasty-tracker.js` - Royal families
 - 🔲 `modules/trade-routes.js` - Historical trade networks
@@ -102,14 +139,14 @@ Transform Fantasy Map Generator into Ancient Atlas Generator across 20 agent ses
 
 ## Key Files to Modify (Future Phases)
 
-| File | Purpose | Changes |
-|------|---------|---------|
-| `modules/cultures-generator.js` | Culture generation | Historical culture sets, constraints |
-| `modules/burgs-and-states.js` | Political entities | City-states, empires, dynasties |
-| `modules/names-generator.js` | Naming | Historical patterns (polis, municipia) |
-| `modules/religions-generator.js` | Religion | Historical pantheons |
-| `modules/military-generator.js` | Military | Ancient unit types |
-| `modules/heightmap-generator.js` | Terrain | Ancient world geography templates |
+| File | Purpose | Changes | Status |
+|------|---------|---------|--------|
+| `modules/cultures-generator.js` | Culture generation | Historical culture sets, constraints | ✅ Modified |
+| `modules/burgs-and-states.js` | Political entities | City-states, empires, dynasties | 🔲 Pending |
+| `modules/names-generator.js` | Naming | Historical patterns (polis, municipia) | 🔲 Pending |
+| `modules/religions-generator.js` | Religion | Historical pantheons | 🔲 Pending |
+| `modules/military-generator.js` | Military | Ancient unit types | 🔲 Pending |
+| `modules/heightmap-generator.js` | Terrain | Ancient world geography templates | 🔲 Pending |
 
 ## New Files to Create (Future Phases)
 
