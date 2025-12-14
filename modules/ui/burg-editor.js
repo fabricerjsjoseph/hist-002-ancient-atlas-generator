@@ -61,6 +61,28 @@ function editBurg(id) {
     const provinceName = province ? pack.provinces[province].fullName + ", " : "";
     const stateName = pack.states[b.state].fullName || pack.states[b.state].name;
     byId("burgProvinceAndState").innerHTML = provinceName + stateName;
+    
+    // Display dynasty information if in historical mode
+    const dynastyInfoDiv = byId("burgDynastyInfo");
+    const isHistoricalMode = window.HistoricalMode && window.HistoricalMode.isEnabled();
+    const hasDynastyTracker = typeof window.DynastyTracker !== 'undefined';
+    
+    if (isHistoricalMode && hasDynastyTracker) {
+      const dynasty = window.DynastyTracker.getDynasty(b.state);
+      if (dynasty && dynasty.isActive) {
+        const ruler = window.DynastyTracker.getCurrentRuler(b.state);
+        if (ruler) {
+          dynastyInfoDiv.innerHTML = `Ruled by ${ruler.title} ${ruler.name} of the ${dynasty.name} Dynasty`;
+          dynastyInfoDiv.style.display = "block";
+        } else {
+          dynastyInfoDiv.style.display = "none";
+        }
+      } else {
+        dynastyInfoDiv.style.display = "none";
+      }
+    } else {
+      dynastyInfoDiv.style.display = "none";
+    }
 
     byId("burgName").value = b.name;
     byId("burgType").value = b.type || "Generic";

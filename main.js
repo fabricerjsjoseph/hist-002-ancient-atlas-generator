@@ -650,6 +650,10 @@ async function generate(options) {
     rankCells();
     Cultures.generate();
     Cultures.expand();
+    
+    // Initialize Dynasty Tracker for historical mode
+    if (window.DynastyTracker) DynastyTracker.initialize();
+    
     BurgsAndStates.generate();
     Routes.generate();
     Religions.generate();
