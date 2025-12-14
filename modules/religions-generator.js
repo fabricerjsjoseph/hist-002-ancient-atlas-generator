@@ -574,17 +574,18 @@ window.Religions = (function () {
     INFO && console.log(`Generated ${religions.length} historical religions`);
   }
   
+  // Name base to civilization mapping (from existing name generator system)
+  // These correspond to the name bases defined in modules/names-generator.js
+  const NAME_BASE_TO_CIV = {
+    8: "roman",      // Roman name base
+    7: "greek",      // Greek name base
+    42: "egyptian",  // Levantine name base (used by Egyptian)
+    18: "persian",   // Arabic name base (used by Persian)
+    11: "sumerian"   // Chinese name base (used by Sumerian as fallback)
+  };
+
   function findCivilizationForCulture(culture, selectedCivs) {
-    // Map name bases to civilizations (same as in religious-sites)
-    const nameBaseMap = {
-      8: "roman",
-      7: "greek",
-      42: "egyptian",
-      18: "persian",
-      11: "sumerian"
-    };
-    
-    let civId = nameBaseMap[culture.base];
+    let civId = NAME_BASE_TO_CIV[culture.base];
     
     // If no mapping found, try to match by culture name
     if (!civId) {
