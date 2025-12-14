@@ -35,7 +35,7 @@ window.ReligiousSites = (function() {
     // Get civilization data
     const civilizationData = {};
     selectedCivs.forEach(civId => {
-      const civData = HistoricalMode.getCivilizationData(civId);
+      const civData = HistoricalMode.getCivilization(civId);
       if (civData) {
         civilizationData[civId] = civData;
       }
