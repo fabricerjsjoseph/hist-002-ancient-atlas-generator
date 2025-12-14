@@ -162,7 +162,7 @@ window.Fortifications = (function() {
    * Generate fortifications for historical mode
    */
   function generate() {
-    if (!window.HistoricalMode || !window.HistoricalMode.isActive()) {
+    if (!window.HistoricalMode || !window.HistoricalMode.isEnabled()) {
       INFO && console.log("Fortifications: Historical mode not active, skipping");
       return;
     }

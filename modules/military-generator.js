@@ -329,7 +329,7 @@ window.Military = (function () {
    */
   const getHistoricalOrDefaultOptions = function () {
     // Check if historical mode is active
-    if (window.HistoricalMode && window.HistoricalMode.isActive() && window.AncientMilitaryUnits) {
+    if (window.HistoricalMode && window.HistoricalMode.isEnabled() && window.AncientMilitaryUnits) {
       const period = window.HistoricalMode.getCurrentPeriod();
       const selectedCivs = window.HistoricalMode.getSelectedCivilizations();
       
