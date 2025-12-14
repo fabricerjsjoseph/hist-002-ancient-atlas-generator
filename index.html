@@ -6272,6 +6272,12 @@
       <button id="toggleDynasty" class="options" data-tip="Show/Hide Dynasty Info" style="margin-bottom: 5px; width: 100%;">
         Dynasties
       </button>
+      <button id="toggleEvents" class="options" data-tip="Show/Hide Historical Events" style="margin-bottom: 5px; width: 100%;">
+        Events
+      </button>
+      <button id="toggleArchaeology" class="options" data-tip="Show/Hide Archaeology Sites" style="margin-bottom: 5px; width: 100%;">
+        Archaeology
+      </button>
     </div>
 
     <div id="civilizationInfoPanel" class="historical-info-panel" style="display: none;">
@@ -6287,6 +6293,31 @@
     <div id="dynastyInfoPanel" class="historical-info-panel" style="display: none;">
       <div class="historical-panel-header">Dynasties & Rulers</div>
       <div class="historical-panel-content">Generate a map to view dynasties</div>
+    </div>
+
+    <div id="eventsInfoPanel" class="historical-info-panel" style="display: none;">
+      <div class="historical-panel-header">Historical Events</div>
+      <div class="historical-panel-content">Generate a map to view historical events</div>
+    </div>
+
+    <div id="archaeologyInfoPanel" class="historical-info-panel" style="display: none;">
+      <div class="historical-panel-header">Archaeological Sites</div>
+      <div class="historical-panel-content">Generate a map to view archaeological sites</div>
+    </div>
+
+    <div id="timelineControlPanel" class="historical-info-panel" style="display: none;">
+      <div class="historical-panel-header">Timeline Simulator</div>
+      <div class="historical-panel-content">
+        <div style="margin: 10px 0;">
+          <label>Year: <span id="timelineYearDisplay">0</span></label>
+        </div>
+        <input type="range" id="timelineSlider" min="-3000" max="500" value="0" style="width: 100%;">
+        <div style="margin-top: 10px; display: flex; gap: 5px;">
+          <button id="timelinePlay" class="options" style="flex: 1;">▶ Play</button>
+          <button id="timelineStop" class="options" style="flex: 1;">⏸ Stop</button>
+          <button id="timelineReset" class="options" style="flex: 1;">⏮ Reset</button>
+        </div>
+      </div>
     </div>
 
     <div id="notes">
@@ -8227,7 +8258,7 @@
     <script src="modules/ui/layers.js?v=1.108.4"></script>
     <script src="modules/ui/measurers.js?v=1.99.00"></script>
     <script src="modules/ui/style-presets.js?v=1.100.00"></script>
-    <script src="modules/ui/historical-controls.js?v=1.108.18"></script>
+    <script src="modules/ui/historical-controls.js?v=1.108.19"></script>
     <script src="modules/ui/general.js?v=1.100.00"></script>
     <script src="modules/ui/options.js?v=1.106.2"></script>
     <script src="main.js?v=1.108.18"></script>
