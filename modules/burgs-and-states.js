@@ -579,6 +579,37 @@ window.BurgsAndStates = (() => {
     });
 
     TIME && console.timeEnd("collectStatistics");
+    
+    // Calculate tribute relationships for historical mode
+    if (window.HistoricalMode && window.HistoricalMode.isEnabled() && window.PoliticalSystems) {
+      calculateTribute();
+    }
+  };
+  
+  // Calculate tribute extracted by suzerain states from vassals
+  const calculateTribute = () => {
+    const {states} = pack;
+    
+    states.forEach(s => {
+      if (!s.i || s.removed) return;
+      
+      s.tributeIncome = 0;
+      s.tributePaid = 0;
+      
+      // Check if this state has vassals
+      if (s.diplomacy) {
+        s.diplomacy.forEach((relation, targetId) => {
+          if (relation === "Suzerain" && states[targetId] && !states[targetId].removed) {
+            // Calculate tribute from vassal
+            const vassal = states[targetId];
+            const tributeRate = window.PoliticalSystems.getTributeProbability(s.governmentType || "monarchy");
+            const tributeAmount = Math.floor((vassal.rural + vassal.urban) * tributeRate * 0.1);
+            s.tributeIncome += tributeAmount;
+            vassal.tributePaid = tributeAmount;
+          }
+        });
+      }
+    });
   };
 
   const assignColors = () => {
@@ -699,10 +730,19 @@ window.BurgsAndStates = (() => {
 
         let status = naval ? rw(navals) : neib ? rw(neibs) : neibOfNeib ? rw(neibsOfNeibs) : rw(far);
 
-        // add Vassal
+        // add Vassal - enhanced for historical mode
+        let vassalChance = 0.8;
+        if (window.HistoricalMode && window.HistoricalMode.isEnabled() && window.PoliticalSystems) {
+          // Use government type to determine vassal probability
+          if (states[f].governmentType) {
+            const stateSize = states[f].area || 0;
+            vassalChance = window.PoliticalSystems.getVassalProbability(states[f].governmentType, stateSize);
+          }
+        }
+        
         if (
           neib &&
-          P(0.8) &&
+          P(vassalChance) &&
           states[f].area > areaMean &&
           states[t].area < areaMean &&
           states[f].area / states[t].area > 2
