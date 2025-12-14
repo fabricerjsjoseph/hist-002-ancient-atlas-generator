@@ -7,7 +7,7 @@ Transform Fantasy Map Generator into Ancient Atlas Generator across 20 agent ses
 - **Codebase**: 15,968 lines, modular architecture
 - **Generation Pipeline**: Heightmap → Biomes → Cultures → States → Names → Rendering (~1s)
 - **43 Name Bases**: Including Roman, Greek, Arabic, Chinese, Egyptian patterns
-- **Status**: ✅ **Phase 1 & 2 COMPLETE** - Historical Mode foundation and Cultural & Naming implemented
+- **Status**: ✅ **Phase 1, 2, 3 & 4 COMPLETE** - Historical Mode foundation, Cultural & Naming, Political Systems, and Historical Geography implemented
 
 ---
 
@@ -97,8 +97,8 @@ Based on the review, the implementation plan remains sound. Here are specific re
 |-------|----------|------|------------------|--------|
 | **1** | 1-2 | Historical Data Foundation | Civilization database, time period selector, historical mode toggle | ✅ COMPLETE |
 | **2** | 3-4 | Cultural & Naming | Historical cultures, authentic naming (Greek polis, Roman cities, etc.) | ✅ COMPLETE |
-| **3** | 5-6 | Political Systems | City-states, empires, dynasties, vassal relationships | 🔲 Pending |
-| **4** | 7-8 | Historical Geography | Ancient biomes, trade routes, landmarks (pyramids, ziggurats) | 🔲 Pending |
+| **3** | 5-6 | Political Systems | City-states, empires, dynasties, vassal relationships | ✅ COMPLETE |
+| **4** | 7-8 | Historical Geography | Ancient biomes, trade routes, landmarks (pyramids, ziggurats) | ✅ COMPLETE |
 | **5** | 9-10 | Religion & Society | Historical pantheons, temples, religious spread | 🔲 Pending |
 | **6** | 11-12 | Military & Warfare | Ancient units (chariots, phalanx, legions), fortifications | 🔲 Pending |
 | **7** | 13-14 | UI & Visualization | Historical mode UI, ancient cartography aesthetics | 🔲 Pending |
@@ -188,6 +188,65 @@ Based on the review, the implementation plan remains sound. Here are specific re
      - Sorting function (geographic preferences)
      - Expansionism rate
 
+## Phase 3 Implementation Details (✅ COMPLETE)
+
+### Files Created (Phase 3)
+- ✅ `modules/political-systems.js` - Government type behaviors (city-state, empire, republic, etc.)
+- ✅ `modules/dynasty-tracker.js` - Dynasty management and succession tracking
+
+### Files Modified (Phase 3)
+- ✅ `modules/burgs-and-states.js` - Integrated political systems
+- ✅ `index.html` - Added script loading for new modules
+- ✅ `main.js` - Added dynasty tracker initialization
+- ✅ `versioning.js` - Updated to v1.108.14
+
+### What Was Implemented
+
+1. **Political Systems Module** (`modules/political-systems.js`)
+   - Government type definitions: city-state, empire, republic, oligarchy, theocracy, kingdom, confederation, despotism
+   - Each type has characteristics: max territory size, capital focus, expansion rate, province system, vassal/tribute tendencies
+   - API for getting government types, applying political traits, and integrating with state generation
+
+2. **Dynasty Tracker Module** (`modules/dynasty-tracker.js`)
+   - Dynasty creation and tracking per state
+   - Ruler succession with civilization-appropriate names and titles
+   - Dynasty founding and ending events
+   - Integration with historical name patterns
+
+## Phase 4 Implementation Details (✅ COMPLETE)
+
+### Files Created (Phase 4)
+- ✅ `modules/trade-routes.js` - Historical trade network generator
+- ✅ `modules/ancient-landmarks.js` - Civilization-specific landmark placement
+
+### Files Modified (Phase 4)
+- ✅ `config/heightmap-templates.js` - Added River Valley and Fertile Crescent templates
+- ✅ `main.js` - Integrated trade routes and landmarks generation
+- ✅ `index.html` - Added script loading for new modules
+- ✅ `versioning.js` - Updated to v1.108.15
+
+### What Was Implemented
+
+1. **Trade Routes Module** (`modules/trade-routes.js`)
+   - Sea trade routes connecting coastal cities (maritime civilizations)
+   - Overland caravan routes for medium-distance trade
+   - River trade routes for river-dependent civilizations
+   - Trade importance calculation based on population, capitals, international trade
+   - Integration with civilization traits (coastal preference, river dependency, trade values)
+
+2. **Ancient Landmarks Module** (`modules/ancient-landmarks.js`)
+   - 20+ landmark types: pyramids, ziggurats, temples, forums, aqueducts, etc.
+   - Civilization-specific landmark placement based on civilization profiles
+   - Terrain-aware placement (desert for pyramids, hills for acropolis, rivers for canals)
+   - Rarity and proximity rules (near capitals, religious significance)
+   - Integration with map marker system
+   - Landmark naming using civilization and deity names
+
+3. **Historical Geography Templates** (in `config/heightmap-templates.js`)
+   - **River Valley**: Nile-style narrow fertile valley surrounded by desert/mountains
+   - **Fertile Crescent**: Arc-shaped fertile region with rivers and surrounding highlands
+   - Templates available for manual selection or historical mode presets
+
 ## Files to Create (Future Phases)
 
 ### Data Files (Pending)
@@ -195,10 +254,10 @@ Based on the review, the implementation plan remains sound. Here are specific re
 - 🔲 `data/ancient-military-units.js`
 
 ### Module Files (Pending)
-- 🔲 `modules/political-systems.js` - Government types
-- 🔲 `modules/dynasty-tracker.js` - Royal families
-- 🔲 `modules/trade-routes.js` - Historical trade networks
-- 🔲 `modules/ancient-landmarks.js` - Pyramids, ziggurats, etc.
+- ✅ `modules/political-systems.js` - Government types
+- ✅ `modules/dynasty-tracker.js` - Royal families
+- ✅ `modules/trade-routes.js` - Historical trade networks
+- ✅ `modules/ancient-landmarks.js` - Pyramids, ziggurats, etc.
 - 🔲 `modules/religious-sites.js` - Temples, oracles
 - 🔲 `modules/fortifications.js` - Ancient defensive structures
 - 🔲 `modules/historical-events.js` - Wars, migrations, etc.
@@ -210,11 +269,11 @@ Based on the review, the implementation plan remains sound. Here are specific re
 | File | Purpose | Changes | Status |
 |------|---------|---------|--------|
 | `modules/cultures-generator.js` | Culture generation | Historical culture sets, constraints | ✅ Modified |
-| `modules/burgs-and-states.js` | Political entities | City-states, empires, dynasties | 🔲 Pending |
+| `modules/burgs-and-states.js` | Political entities | City-states, empires, dynasties | ✅ Modified |
+| `config/heightmap-templates.js` | Terrain templates | Historical geography templates | ✅ Modified |
 | `modules/names-generator.js` | Naming | Historical patterns (polis, municipia) | 🔲 Pending |
 | `modules/religions-generator.js` | Religion | Historical pantheons | 🔲 Pending |
 | `modules/military-generator.js` | Military | Ancient unit types | 🔲 Pending |
-| `modules/heightmap-generator.js` | Terrain | Ancient world geography templates | 🔲 Pending |
 
 ## New Files to Create (Future Phases)
 
@@ -328,56 +387,52 @@ Based on the review, the implementation plan remains sound. Here are specific re
 
 ---
 
-## Next Steps → Phase 3: Political Systems (Sessions 5-6)
+## Next Steps → Phase 5: Religion & Society (Sessions 9-10)
 
 ### Objectives
-Transform the state generation system to support historically-accurate political entities.
+Implement historical religious systems with civilization-specific pantheons and religious sites.
 
 ### Key Tasks
 
-#### Session 5: Core Political Systems
-1. **Modify `modules/burgs-and-states.js`**
-   - Add `createHistoricalStates()` function
-   - Implement city-state model (small, independent poleis for Greek/Sumerian)
-   - Implement empire model (large territory with provinces for Roman/Persian)
-   - Use civilization constraints (maxStateSize from profiles)
+#### Session 9: Historical Pantheons
+1. **Create `data/historical-pantheons.js`**
+   - Comprehensive deity databases for all 10 civilizations
+   - Deity domains, relationships, and importance
+   - Religious site types (temples, oracles, shrines)
 
-2. **Create `modules/political-systems.js`**
-   - Define government type behaviors
-   - City-state: High independence, limited territory
-   - Empire: Province system, tribute relationships
-   - Theocracy: Religious influence on politics
-   - Republic: Council/Senate structures
+2. **Modify `modules/religions-generator.js`**
+   - Add `generateHistoricalReligions()` function
+   - Integrate civilization pantheons
+   - Religious spread based on cultural/political influence
 
-#### Session 6: Dynasties & Relationships
-1. **Create `modules/dynasty-tracker.js`**
-   - Track ruling families per state
-   - Generate dynasty names from civilization profiles
-   - Succession logic (for future event system)
+#### Session 10: Religious Sites & Society
+1. **Create `modules/religious-sites.js`**
+   - Temple placement based on civilization and deity importance
+   - Oracle locations for Greek civilization
+   - Sacred sites and pilgrimage destinations
 
-2. **Add Vassal Relationships**
-   - Extend diplomacy system for suzerain/vassal
-   - Client kingdoms
-   - Tribute systems
+2. **Enhance Society Simulation**
+   - Religious festivals and holy days
+   - Priest classes and religious hierarchy
+   - Religious conflicts and conversions
 
 ### Files to Modify
-- `modules/burgs-and-states.js` - Core state generation
-- `modules/diplomatic.js` (if exists) - Relationship types
+- `modules/religions-generator.js` - Core religion generation
 
 ### Files to Create
-- `modules/political-systems.js` - Government type logic
-- `modules/dynasty-tracker.js` - Dynasty management
+- `data/historical-pantheons.js` - Deity databases
+- `modules/religious-sites.js` - Sacred site placement
 
 ### Integration Points
-- Use `CivilizationX.governmentTypes` for valid government selection
-- Use `CivilizationX.constraints.maxStateSize` for territory limits
-- Use `HistoricalNames.getDynasty()` for dynasty naming
+- Use `CivilizationX.pantheon` for deity selection
+- Use `CivilizationX.religiousImportance` for temple frequency
+- Use `CivilizationX.religiousSites` for site types
 
 ### Testing Criteria
-- [ ] Greek civilizations generate small city-states
-- [ ] Roman/Persian civilizations generate large empires
-- [ ] Dynasty names are civilization-appropriate
-- [ ] Vassal relationships display correctly
+- [ ] Egyptian states worship Ra, Osiris, Isis
+- [ ] Greek states have temples to Zeus, Athena, Apollo
+- [ ] Roman states worship Jupiter, Mars, Venus
+- [ ] Religious sites appear near appropriate cities
 - [ ] Fantasy mode unaffected
 
 *For detailed implementation patterns, see ANCIENT_ATLAS_ANALYSIS.md*

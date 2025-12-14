@@ -147,6 +147,30 @@ const heightmapTemplates = (function () {
     Add -20 30-100 0 0
     Range 6-8 40-50 5-95 10-90`;
 
+  // Historical Geography Templates for Phase 4
+  
+  const riverValley = `Add 15 all 0 0
+    Hill 8-12 30-50 45-55 0-100
+    Trough 8-12 50-80 48-52 5-95
+    Add -18 20-100 0 0
+    Hill 2-3 10-20 48-52 10-90
+    Hill 2-3 10-20 48-52 10-90
+    Multiply 0.3 land 0 0
+    Smooth 2 0 0 0
+    Range 2-3 30-60 0-15 20-80
+    Range 2-3 30-60 85-100 20-80`;
+  
+  const fertileCrescent = `Add 12 all 0 0
+    Hill 8-10 40-60 10-90 30-70
+    Trough 6-8 30-50 20-80 35-65
+    Hill 3-4 15-25 15-35 40-60
+    Hill 3-4 15-25 65-85 40-60
+    Range 2-3 40-60 10-20 20-80
+    Range 2-3 40-60 80-90 20-80
+    Multiply 0.4 land 0 0
+    Smooth 2 0 0 0
+    Add -15 25-100 0 0`;
+
   return {
     volcano: {id: 0, name: "Volcano", template: volcano, probability: 3},
     highIsland: {id: 1, name: "High Island", template: highIsland, probability: 19},
@@ -161,6 +185,8 @@ const heightmapTemplates = (function () {
     shattered: {id: 10, name: "Shattered", template: shattered, probability: 7},
     taklamakan: {id: 11, name: "Taklamakan", template: taklamakan, probability: 1},
     oldWorld: {id: 12, name: "Old World", template: oldWorld, probability: 8},
-    fractious: {id: 13, name: "Fractious", template: fractious, probability: 3}
+    fractious: {id: 13, name: "Fractious", template: fractious, probability: 3},
+    riverValley: {id: 14, name: "River Valley", template: riverValley, probability: 0},
+    fertileCrescent: {id: 15, name: "Fertile Crescent", template: fertileCrescent, probability: 0}
   };
 })();

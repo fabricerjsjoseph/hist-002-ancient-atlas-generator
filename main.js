@@ -654,6 +654,10 @@ async function generate(options) {
     // Initialize Dynasty Tracker for historical mode
     if (window.DynastyTracker) DynastyTracker.initialize();
     
+    // Initialize Phase 4 modules
+    if (window.TradeRoutes) TradeRoutes.initialize();
+    if (window.AncientLandmarks) AncientLandmarks.initialize();
+    
     BurgsAndStates.generate();
     Routes.generate();
     Religions.generate();
@@ -667,6 +671,14 @@ async function generate(options) {
 
     Military.generate();
     Markers.generate();
+    
+    // Generate Phase 4 historical geography features
+    if (window.TradeRoutes) TradeRoutes.generate();
+    if (window.AncientLandmarks) {
+      AncientLandmarks.generate();
+      AncientLandmarks.addToMarkers();
+    }
+    
     Zones.generate();
 
     drawScaleBar(scaleBar, scale);
