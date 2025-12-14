@@ -6,7 +6,7 @@ This repository contains a comprehensive analysis and phased implementation plan
 
 ## Documentation Files
 
-### 📘 [ANCIENT_ATLAS_ANALYSIS.md](./ANCIENT_ATLAS_ANALYSIS.md) (18KB)
+### 📘 [ANCIENT_ATLAS_ANALYSIS.md](../reference/conversion/ANCIENT_ATLAS_ANALYSIS.md) (18KB)
 **Comprehensive technical analysis and detailed implementation guide**
 
 Contains:
@@ -21,7 +21,7 @@ Contains:
 
 **Best for**: Developers who need deep technical understanding of how to implement each feature.
 
-### 📗 [IMPLEMENTATION_ROADMAP.md](./IMPLEMENTATION_ROADMAP.md) (10KB)
+### 📗 [IMPLEMENTATION_ROADMAP.md](../reference/conversion/IMPLEMENTATION_ROADMAP.md) (10KB)
 **Quick reference guide with session-by-session implementation steps**
 
 Contains:
@@ -106,14 +106,14 @@ Create a dual-mode system:
 Read the **Phase Overview** sections in both documents to understand the big picture.
 
 ### For Implementation:
-1. Start with **IMPLEMENTATION_ROADMAP.md** for quick session guides
-2. Reference **ANCIENT_ATLAS_ANALYSIS.md** for detailed technical implementation
+1. Start with [IMPLEMENTATION_ROADMAP.md](../reference/conversion/IMPLEMENTATION_ROADMAP.md) for quick session guides
+2. Reference [ANCIENT_ATLAS_ANALYSIS.md](../reference/conversion/ANCIENT_ATLAS_ANALYSIS.md) for detailed technical implementation
 3. Follow the **Quick Start** guide in IMPLEMENTATION_ROADMAP.md for Phase 1
 
 ### For Code Examples:
 Both documents contain code examples, but:
-- **IMPLEMENTATION_ROADMAP.md** has ready-to-use templates
-- **ANCIENT_ATLAS_ANALYSIS.md** has detailed explanations with examples
+- [IMPLEMENTATION_ROADMAP.md](../reference/conversion/IMPLEMENTATION_ROADMAP.md) has ready-to-use templates
+- [ANCIENT_ATLAS_ANALYSIS.md](../reference/conversion/ANCIENT_ATLAS_ANALYSIS.md) has detailed explanations with examples
 
 ## Timeline
 
@@ -135,7 +135,7 @@ Both documents contain code examples, but:
 **Ready to start?** Begin with Phase 1, Session 1:
 
 1. Create `data/civilizations/` directory
-2. Implement Egyptian civilization profile (see IMPLEMENTATION_ROADMAP.md Quick Start)
+2. Implement Egyptian civilization profile (see [IMPLEMENTATION_ROADMAP.md](../reference/conversion/IMPLEMENTATION_ROADMAP.md) Quick Start)
 3. Test historical data loading
 4. Move to Session 2: UI controls
 
@@ -169,5 +169,5 @@ Same as original Fantasy Map Generator (MIT License)
 ---
 
 **Start Reading**: 
-- For overview → [IMPLEMENTATION_ROADMAP.md](./IMPLEMENTATION_ROADMAP.md)
-- For details → [ANCIENT_ATLAS_ANALYSIS.md](./ANCIENT_ATLAS_ANALYSIS.md)
+- For overview → [IMPLEMENTATION_ROADMAP.md](../reference/conversion/IMPLEMENTATION_ROADMAP.md)
+- For details → [ANCIENT_ATLAS_ANALYSIS.md](../reference/conversion/ANCIENT_ATLAS_ANALYSIS.md)
