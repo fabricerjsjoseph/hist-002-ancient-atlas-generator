@@ -225,7 +225,7 @@ window.AncientLandmarks = (function() {
     landmarks = [];
     
     // Only generate in historical mode
-    if (!window.HistoricalMode || !window.HistoricalMode.isActive()) {
+    if (!window.HistoricalMode || !window.HistoricalMode.isEnabled()) {
       TIME && console.timeEnd("generateAncientLandmarks");
       return;
     }
@@ -336,6 +336,7 @@ window.AncientLandmarks = (function() {
         if (biome !== 1 && biome !== 2) {
           // Check nearby cells for desert
           const neighbors = cells.c[cell];
+          if (!neighbors) return false;
           const hasNearbyDesert = neighbors.some(n => cells.biome[n] === 1 || cells.biome[n] === 2);
           if (!hasNearbyDesert) return false;
         }
@@ -346,6 +347,7 @@ window.AncientLandmarks = (function() {
         if (!cells.r || !cells.r[cell] || cells.r[cell] === 0) {
           // Check nearby cells for river
           const neighbors = cells.c[cell];
+          if (!neighbors) return false;
           const hasNearbyRiver = neighbors.some(n => cells.r && cells.r[n] && cells.r[n] > 0);
           if (!hasNearbyRiver) return false;
         }
@@ -356,6 +358,7 @@ window.AncientLandmarks = (function() {
         if (height < 50 || height > 85) {
           // Check nearby cells
           const neighbors = cells.c[cell];
+          if (!neighbors) return false;
           const hasNearbyHills = neighbors.some(n => {
             const h = cells.h[n];
             return h >= 50 && h <= 85;
@@ -367,6 +370,7 @@ window.AncientLandmarks = (function() {
       // Water requirement
       if (typeConfig.nearWater) {
         const neighbors = cells.c[cell];
+        if (!neighbors) return false;
         const hasNearbyWater = neighbors.some(n => cells.h[n] < 20);
         if (!hasNearbyWater && height >= 20) return false;
       }

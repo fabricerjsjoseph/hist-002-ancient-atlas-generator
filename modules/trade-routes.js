@@ -23,7 +23,7 @@ window.TradeRoutes = (function() {
     tradeRoutes = [];
     
     // Only generate in historical mode
-    if (!window.HistoricalMode || !window.HistoricalMode.isActive()) {
+    if (!window.HistoricalMode || !window.HistoricalMode.isEnabled()) {
       TIME && console.timeEnd("generateTradeRoutes");
       return;
     }
