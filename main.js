@@ -1329,10 +1329,12 @@ function undraw() {
 // Historical Mode UI Handlers
 function handleMapModeChange(mode) {
   const historicalPeriodRow = byId("historicalPeriodRow");
+  const historicalPresetRow = byId("historicalPresetRow");
   const historicalCivRow = byId("historicalCivRow");
   
   if (mode === "historical") {
     historicalPeriodRow.style.display = "table-row";
+    if (historicalPresetRow) historicalPresetRow.style.display = "table-row";
     historicalCivRow.style.display = "table-row";
     
     // Enable historical mode with default period
@@ -1357,6 +1359,7 @@ function handleMapModeChange(mode) {
     INFO && console.log("Switched to Historical Mode");
   } else {
     historicalPeriodRow.style.display = "none";
+    if (historicalPresetRow) historicalPresetRow.style.display = "none";
     historicalCivRow.style.display = "none";
     
     if (window.HistoricalMode) {
@@ -1433,6 +1436,19 @@ function handleCivilizationSelectionChange() {
   
   const selectedCivs = Array.from(civSelect.selectedOptions).map(opt => opt.value);
   window.HistoricalMode.selectCivilizations(selectedCivs);
+}
+
+function handleHistoricalPresetChange(presetId) {
+  if (!presetId || !window.HistoricalPresets) return;
+  
+  INFO && console.log(`Applying historical preset: ${presetId}`);
+  
+  const success = window.HistoricalPresets.applyPreset(presetId);
+  if (success) {
+    tip(`Applied preset: ${window.HistoricalPresets.getPreset(presetId).name}`, true, "success", 3000);
+  } else {
+    tip(`Failed to apply preset: ${presetId}`, true, "error", 3000);
+  }
 }
 
 // Add event listener for civilization selection changes

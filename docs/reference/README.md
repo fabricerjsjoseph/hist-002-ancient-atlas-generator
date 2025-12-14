@@ -20,6 +20,12 @@ Implementation plans and technical analysis for converting the Fantasy Map Gener
   - File-by-file implementation guide
   - Technical considerations and best practices
 
+### 📖 [Civilization Reference](./civilization-reference.md)
+Complete reference for all 10 historical civilizations including government types, military composition, cultural traits, religious systems, and naming patterns.
+
+### 💻 [Developer Guide](./developer-guide.md)
+Technical documentation for developers working on Historical Mode, including architecture overview, module structure, APIs, integration points, and code conventions.
+
 ### 📊 Data Model (Coming soon)
 Documentation of the data structures used in the application.
 

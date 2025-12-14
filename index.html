@@ -1651,6 +1651,42 @@
               <td></td>
             </tr>
 
+            <tr id="historicalPresetRow" data-tip="Quick-start with a preset configuration" style="display: none">
+              <td>
+                <i class="icon-magic"></i>
+              </td>
+              <td>Preset</td>
+              <td>
+                <select id="historicalPresetSelect" onchange="handleHistoricalPresetChange(this.value)">
+                  <option value="" selected>Custom Configuration</option>
+                  <optgroup label="Bronze Age Civilizations">
+                    <option value="egyptian">Ancient Egypt</option>
+                    <option value="sumerian">Sumerian City-States</option>
+                    <option value="minoan">Minoan Thalassocracy</option>
+                    <option value="hittite">Hittite Empire</option>
+                    <option value="mycenaean">Mycenaean Greece</option>
+                    <option value="bronzeAgeMixed">Bronze Age World</option>
+                  </optgroup>
+                  <optgroup label="Classical Age Civilizations">
+                    <option value="greek">Ancient Greece</option>
+                    <option value="roman">Roman Empire</option>
+                    <option value="persian">Persian Empire</option>
+                    <option value="carthaginian">Carthaginian Empire</option>
+                    <option value="celtic">Celtic Tribes</option>
+                    <option value="classicalMixed">Classical Age World</option>
+                  </optgroup>
+                  <optgroup label="Historical Scenarios">
+                    <option value="mediterraneanConflict">Mediterranean Conflict</option>
+                    <option value="persianGreekWars">Greco-Persian Wars</option>
+                    <option value="aegeanBronzeAge">Aegean Bronze Age</option>
+                  </optgroup>
+                </select>
+              </td>
+              <td data-tip="Apply a preset configuration">
+                <i class="icon-info"></i>
+              </td>
+            </tr>
+
             <tr id="historicalCivRow" data-tip="Select specific civilizations or use all from the period" style="display: none">
               <td>
                 <i class="icon-users"></i>
@@ -8209,6 +8245,7 @@
     <script src="config/precreated-heightmaps.js"></script>
     <!-- Historical Mode Files -->
     <script src="config/historical-periods.js?v=1.0.0"></script>
+    <script src="config/historical-presets.js?v=1.0.0"></script>
     <script src="data/civilizations/egyptian.js?v=1.0.0"></script>
     <script src="data/civilizations/sumerian.js?v=1.0.0"></script>
     <script src="data/civilizations/minoan.js?v=1.0.0"></script>
@@ -8261,7 +8298,7 @@
     <script src="modules/ui/historical-controls.js?v=1.108.19"></script>
     <script src="modules/ui/general.js?v=1.100.00"></script>
     <script src="modules/ui/options.js?v=1.106.2"></script>
-    <script src="main.js?v=1.108.18"></script>
+    <script src="main.js?v=1.108.20"></script>
 
     <script defer src="modules/ui/style.js?v=1.108.4"></script>
     <script defer src="modules/ui/editors.js?v=1.108.5"></script>

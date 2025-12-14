@@ -4,11 +4,10 @@ Task-oriented guides for accomplishing specific goals with the Ancient Atlas Gen
 
 ## Available How-To Guides
 
-> **Note**: How-to guides are currently being developed. Check back soon!
+- **[Historical Mode User Guide](./historical-mode-guide.md)** - Complete guide to using Historical Mode with civilizations, presets, and customization
 
 ### Planned Guides
 
-- **How to generate a Bronze Age map** (Coming soon)
 - **How to customize civilization parameters** (Coming soon)
 - **How to export your map** (Coming soon)
 - **How to troubleshoot generation errors** (Coming soon)
