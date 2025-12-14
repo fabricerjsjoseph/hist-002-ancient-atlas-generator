@@ -262,13 +262,22 @@ window.AncientLandmarks = (function() {
     const cells = pack.cells;
     
     // Find cities belonging to this civilization's culture
-    const civCities = pack.burgs.filter(b => {
-      if (!b.i || b.removed) return false;
-      
-      // Match by culture/civilization (this is a simplified check)
-      // In a full implementation, you'd want to track which civilization each state belongs to
-      return b.population > 0;
-    });
+    // Note: This is a simplified implementation that distributes landmarks across all cities
+    // proportionally to the number of selected civilizations. For better accuracy in future
+    // versions, implement civilization-to-state tracking to place landmarks only in cities
+    // that belong to the correct civilization.
+    const allCities = pack.burgs.filter(b => b.i && !b.removed && b.population > 0);
+    
+    // Get selected civilizations to determine distribution
+    const selectedCivs = window.HistoricalMode.getSelectedCivilizations();
+    const numCivs = selectedCivs.length || 1;
+    
+    // Distribute cities among civilizations (simplified approach)
+    const citiesPerCiv = Math.ceil(allCities.length / numCivs);
+    const civIndex = selectedCivs.indexOf(civId);
+    const startIdx = civIndex >= 0 ? civIndex * citiesPerCiv : 0;
+    const endIdx = Math.min(startIdx + citiesPerCiv, allCities.length);
+    const civCities = allCities.slice(startIdx, endIdx);
     
     if (civCities.length === 0) return;
     
@@ -328,7 +337,6 @@ window.AncientLandmarks = (function() {
       const cell = city.cell;
       const height = cells.h[cell];
       const biome = cells.biome[cell];
-      const temp = cells.temp[cell];
       
       // Desert requirement
       if (typeConfig.requiresDesert) {
@@ -467,10 +475,10 @@ window.AncientLandmarks = (function() {
   function addToMarkers() {
     if (!pack.markers) pack.markers = [];
     
+    // Find next available marker ID once
+    const maxId = pack.markers.reduce((max, m) => Math.max(max, m.i || 0), 0);
+    
     landmarks.forEach((landmark, index) => {
-      // Find next available marker ID
-      const maxId = pack.markers.reduce((max, m) => Math.max(max, m.i || 0), 0);
-      
       pack.markers.push({
         i: maxId + index + 1,
         icon: landmark.icon,
