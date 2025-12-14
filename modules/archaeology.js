@@ -350,7 +350,10 @@ window.Archaeology = (function() {
       
       let placed = 0;
       
-      sites.forEach(site => {
+      // Find next available marker ID
+      const maxId = pack.markers.reduce((max, m) => Math.max(max, m.i || 0), 0);
+      
+      sites.forEach((site, index) => {
         if (!site.cellId && site.cellId !== 0) return;
         
         // Get cell coordinates
@@ -360,7 +363,7 @@ window.Archaeology = (function() {
         
         // Create marker
         const marker = {
-          i: last(pack.markers)?.i + 1 || 0,
+          i: maxId + index + 1,
           icon: site.icon,
           type: "archaeology",
           dx: 0,
