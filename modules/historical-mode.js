@@ -59,7 +59,7 @@ window.HistoricalMode = (function() {
     // Enable historical mode with a specific period
     enable: function(periodId) {
       if (!window.HistoricalPeriods || !window.HistoricalPeriods[periodId]) {
-        console.warn(`Historical period '${periodId}' not found`);
+        WARN && console.warn(`Historical period '${periodId}' not found`);
         return false;
       }
       
