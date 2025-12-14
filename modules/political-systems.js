@@ -142,11 +142,11 @@ window.PoliticalSystems = (function() {
         return civilization.defaultGovernment;
       }
       
-      // Otherwise pick from available types (weighted by historical frequency)
+      // Otherwise pick randomly from available government types
       const types = civilization.governmentTypes;
       if (types.length === 0) return "monarchy";
       
-      // Simple random selection from available types
+      // Random selection from civilization's valid government types
       return types[Math.floor(Math.random() * types.length)];
     },
     

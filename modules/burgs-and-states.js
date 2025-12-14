@@ -586,9 +586,23 @@ window.BurgsAndStates = (() => {
     }
   };
   
-  // Calculate tribute extracted by suzerain states from vassals
-  // In the diplomacy array: if state[s].diplomacy[targetId] === "Suzerain",
-  // it means state `s` is the suzerain (overlord) and `targetId` is the vassal (subject)
+  /**
+   * Calculate tribute extracted by suzerain states from their vassals
+   * 
+   * In the diplomacy array: if state[s].diplomacy[targetId] === "Suzerain",
+   * it means state `s` is the suzerain (overlord) and `targetId` is the vassal (subject).
+   * 
+   * Tribute is calculated based on:
+   * - Vassal's total population (rural + urban)
+   * - Suzerain's government type tribute rate
+   * - Base rate of 10% of population
+   * 
+   * Updates state properties:
+   * - suzerain.tributeIncome - total tribute received from all vassals
+   * - vassal.tributePaid - amount of tribute paid to suzerain
+   * 
+   * @returns {void}
+   */
   const calculateTribute = () => {
     const {states} = pack;
     
