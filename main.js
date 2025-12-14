@@ -666,6 +666,11 @@ async function generate(options) {
     // Initialize Phase 5 modules
     if (window.ReligiousSites) ReligiousSites.initialize();
     
+    // Initialize Phase 8 modules
+    if (window.HistoricalEvents) HistoricalEvents.initialize();
+    if (window.TimelineSimulator) TimelineSimulator.initialize();
+    if (window.Archaeology) Archaeology.initialize();
+    
     BurgsAndStates.generate();
     Routes.generate();
     Religions.generate();
@@ -696,6 +701,25 @@ async function generate(options) {
     // Generate Phase 6 fortifications
     if (window.Fortifications) {
       Fortifications.generate();
+    }
+    
+    // Generate Phase 8 specialized features
+    if (window.HistoricalEvents && window.HistoricalMode && window.HistoricalMode.isEnabled()) {
+      // Generate historical events for the period
+      const currentYear = pack.time || 0;
+      const startYear = currentYear - 500; // Last 500 years
+      HistoricalEvents.generateEventsForPeriod(startYear, currentYear, 2);
+    }
+    
+    if (window.Archaeology && window.HistoricalMode && window.HistoricalMode.isEnabled()) {
+      // Generate archaeological sites from fallen civilizations
+      Archaeology.generateFromFallenCivilizations();
+      Archaeology.placeAsMarkers();
+    }
+    
+    if (window.TimelineSimulator && window.HistoricalMode && window.HistoricalMode.isEnabled()) {
+      // Capture initial state for timeline
+      TimelineSimulator.captureSnapshot(pack.time || 0);
     }
     
     Zones.generate();
