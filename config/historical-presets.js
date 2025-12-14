@@ -428,7 +428,7 @@ window.HistoricalPresets = (function () {
       }
 
       // Set selected civilizations
-      const civilizationSelect = document.getElementById("civilizationSelect");
+      const civilizationSelect = document.getElementById("historicalCivSelect");
       if (civilizationSelect && preset.civilizations) {
         // Clear current selections
         Array.from(civilizationSelect.options).forEach(option => {
