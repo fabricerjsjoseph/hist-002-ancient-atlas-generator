@@ -688,6 +688,11 @@ async function generate(options) {
       ReligiousSites.addToMarkers();
     }
     
+    // Generate Phase 6 fortifications
+    if (window.Fortifications) {
+      Fortifications.generate();
+    }
+    
     Zones.generate();
 
     drawScaleBar(scaleBar, scale);

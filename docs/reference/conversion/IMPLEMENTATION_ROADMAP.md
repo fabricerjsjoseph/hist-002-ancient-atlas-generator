@@ -99,8 +99,8 @@ Based on the review, the implementation plan remains sound. Here are specific re
 | **2** | 3-4 | Cultural & Naming | Historical cultures, authentic naming (Greek polis, Roman cities, etc.) | ✅ COMPLETE |
 | **3** | 5-6 | Political Systems | City-states, empires, dynasties, vassal relationships | ✅ COMPLETE |
 | **4** | 7-8 | Historical Geography | Ancient biomes, trade routes, landmarks (pyramids, ziggurats) | ✅ COMPLETE |
-| **5** | 9-10 | Religion & Society | Historical pantheons, temples, religious spread | 🔲 Pending |
-| **6** | 11-12 | Military & Warfare | Ancient units (chariots, phalanx, legions), fortifications | 🔲 Pending |
+| **5** | 9-10 | Religion & Society | Historical pantheons, temples, religious spread | ✅ COMPLETE |
+| **6** | 11-12 | Military & Warfare | Ancient units (chariots, phalanx, legions), fortifications | ✅ COMPLETE |
 | **7** | 13-14 | UI & Visualization | Historical mode UI, ancient cartography aesthetics | 🔲 Pending |
 | **8** | 15-16 | Specialized Features | Events, dynamic borders, dynasties, archaeology | 🔲 Pending |
 | **9** | 17-18 | Presets & Templates | Quick-start historical maps, documentation | 🔲 Pending |
@@ -247,19 +247,101 @@ Based on the review, the implementation plan remains sound. Here are specific re
    - **Fertile Crescent**: Arc-shaped fertile region with rivers and surrounding highlands
    - Templates available for manual selection or historical mode presets
 
+## Phase 5 Implementation Details (✅ COMPLETE)
+
+### Files Created (Phase 5)
+- ✅ `data/historical-pantheons.js` - Deity databases for all 10 civilizations
+- ✅ `modules/religious-sites.js` - Temple and sacred site placement
+
+### Files Modified (Phase 5)
+- ✅ `modules/religions-generator.js` - Added historical pantheon integration
+- ✅ `index.html` - Added script loading for Phase 5 files
+- ✅ `main.js` - Integrated religious sites generation
+- ✅ `versioning.js` - Updated to v1.108.16
+
+### What Was Implemented
+
+1. **Historical Pantheons** (`data/historical-pantheons.js`)
+   - Comprehensive deity databases for all 10 civilizations
+   - Deity domains, importance, and attributes
+   - Religious site types per civilization
+
+2. **Religious Sites Module** (`modules/religious-sites.js`)
+   - Temple placement based on civilization and deity importance
+   - Oracle locations for Greek civilization
+   - Sacred sites and pilgrimage destinations
+   - Integration with map marker system
+
+## Phase 6 Implementation Details (✅ COMPLETE)
+
+### Files Created (Phase 6)
+- ✅ `data/ancient-military-units.js` - Historical military unit database
+- ✅ `modules/fortifications.js` - Ancient defensive structures
+
+### Files Modified (Phase 6)
+- ✅ `modules/military-generator.js` - Added historical unit integration
+- ✅ `index.html` - Added script loading for Phase 6 files
+- ✅ `main.js` - Integrated fortifications generation
+- ✅ `versioning.js` - Updated to v1.108.17
+
+### What Was Implemented
+
+1. **Ancient Military Units** (`data/ancient-military-units.js`)
+   - **Bronze Age Units** (6 types):
+     - Spearmen, archers, chariots, war galleys, palace guard, axe warriors
+     - Civilization-specific filtering (e.g., chariots for Egyptian, Hittite)
+     - Biome restrictions (chariots only in open terrain)
+   - **Classical Age Units** (14 types):
+     - Hoplites, legionnaires, bowmen, cavalry, immortals, war elephants
+     - Celtic warriors, auxiliaries, triremes, quinqueremes, siege engines
+     - Cataphracts, light cavalry, praetorians
+     - Civilization-specific elite units (immortals for Persian, praetorians for Roman)
+   - **API Functions**:
+     - `getUnitsForPeriod(period)` - Get all units for a time period
+     - `getUnitsForCivilization(civ, period)` - Get units for specific civilization
+     - `getUnitsForCivilizations(civs, period)` - Get units for multiple civilizations
+     - `getHistoricalUnitOptions(civs, period)` - Complete integration function
+
+2. **Fortifications Module** (`modules/fortifications.js`)
+   - **4 Fortification Types**:
+     - City Walls: Population-based, civilization preference (Roman 90%, Minoan 50%)
+     - Border Forts: Along state boundaries, prefer highlands
+     - Naval Bases: At major ports, coastal civilization preference
+     - Watch Towers: Surveillance points on highlands/coasts/roads
+   - **10 Civilization Styles**:
+     - Roman: Stone walls with towers, castrum forts, naval ports
+     - Greek: Cyclopean walls, hilltop fortresses
+     - Egyptian: Mudbrick walls, desert forts, river ports
+     - Persian: Brick walls with gates, mountain fortresses
+     - And 6 more civilization-specific styles
+   - **Smart Placement Logic**:
+     - Terrain-aware (highlands for forts, coasts for naval bases)
+     - Population thresholds (500+ for city walls)
+     - Civilization cultural traits (fortification preference)
+     - Capital cities get bonus probability
+
+3. **Military Generator Integration** (in `modules/military-generator.js`)
+   - New function: `getHistoricalOrDefaultOptions()`
+     - Checks if historical mode is enabled via `HistoricalMode.isEnabled()`
+     - Gets current period and selected civilizations
+     - Returns historical units when in historical mode
+     - Falls back to fantasy units in fantasy mode
+   - Maintains full backward compatibility
+   - Fantasy mode completely unaffected
+
 ## Files to Create (Future Phases)
 
-### Data Files (Pending)
-- 🔲 `data/historical-pantheons.js`
-- 🔲 `data/ancient-military-units.js`
+### Data Files (Completed)
+- ✅ `data/historical-pantheons.js`
+- ✅ `data/ancient-military-units.js`
 
 ### Module Files (Pending)
 - ✅ `modules/political-systems.js` - Government types
 - ✅ `modules/dynasty-tracker.js` - Royal families
 - ✅ `modules/trade-routes.js` - Historical trade networks
 - ✅ `modules/ancient-landmarks.js` - Pyramids, ziggurats, etc.
-- 🔲 `modules/religious-sites.js` - Temples, oracles
-- 🔲 `modules/fortifications.js` - Ancient defensive structures
+- ✅ `modules/religious-sites.js` - Temples, oracles
+- ✅ `modules/fortifications.js` - Ancient defensive structures
 - 🔲 `modules/historical-events.js` - Wars, migrations, etc.
 - 🔲 `modules/timeline-simulator.js` - Dynamic borders over time
 - 🔲 `modules/archaeology.js` - Ruins and lost cities
@@ -272,8 +354,8 @@ Based on the review, the implementation plan remains sound. Here are specific re
 | `modules/burgs-and-states.js` | Political entities | City-states, empires, dynasties | ✅ Modified |
 | `config/heightmap-templates.js` | Terrain templates | Historical geography templates | ✅ Modified |
 | `modules/names-generator.js` | Naming | Historical patterns (polis, municipia) | 🔲 Pending |
-| `modules/religions-generator.js` | Religion | Historical pantheons | 🔲 Pending |
-| `modules/military-generator.js` | Military | Ancient unit types | 🔲 Pending |
+| `modules/religions-generator.js` | Religion | Historical pantheons | ✅ Modified |
+| `modules/military-generator.js` | Military | Ancient unit types | ✅ Modified |
 
 ## New Files to Create (Future Phases)
 

@@ -6,7 +6,7 @@ window.Military = (function () {
     const {cells, states} = pack;
     const {p} = cells;
     const valid = states.filter(s => s.i && !s.removed); // valid states
-    if (!options.military) options.military = getDefaultOptions();
+    if (!options.military) options.military = getHistoricalOrDefaultOptions();
 
     const expn = d3.sum(valid.map(s => s.expansionism)); // total expansion
     const area = d3.sum(valid.map(s => s.area)); // total area
@@ -323,6 +323,30 @@ window.Military = (function () {
     ];
   };
 
+  /**
+   * Get historical or default military unit options
+   * Uses AncientMilitaryUnits when in historical mode
+   */
+  const getHistoricalOrDefaultOptions = function () {
+    // Check if historical mode is active
+    if (window.HistoricalMode && window.HistoricalMode.isEnabled() && window.AncientMilitaryUnits) {
+      const period = window.HistoricalMode.getCurrentPeriod();
+      const selectedCivs = window.HistoricalMode.getSelectedCivilizations();
+      
+      if (period && selectedCivs && selectedCivs.length > 0) {
+        INFO && console.log(`Military: Using historical units for ${period} period with ${selectedCivs.length} civilization(s)`);
+        const historicalUnits = window.AncientMilitaryUnits.getHistoricalUnitOptions(selectedCivs, period);
+        
+        if (historicalUnits && historicalUnits.length > 0) {
+          return historicalUnits;
+        }
+      }
+    }
+    
+    // Fallback to default fantasy units
+    return getDefaultOptions();
+  };
+
   // utilize si function to make regiment total text fit regiment box
   const getTotal = reg => (reg.a > (reg.n ? 999 : 99999) ? si(reg.a) : reg.a);
 
@@ -386,6 +410,7 @@ window.Military = (function () {
   return {
     generate,
     getDefaultOptions,
+    getHistoricalOrDefaultOptions,
     getName,
     generateNote,
     getTotal,
