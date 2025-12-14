@@ -1,0 +1,446 @@
+{
+  "#map": {
+    "background-color": "#d4c4a0",
+    "filter": null,
+    "data-filter": null
+  },
+  "#armies": {
+    "font-size": 8,
+    "box-size": 4,
+    "stroke": "#3d2817",
+    "stroke-width": 0.3,
+    "fill-opacity": 1,
+    "filter": null
+  },
+  "#biomes": {
+    "opacity": null,
+    "filter": null,
+    "mask": "url(#land)"
+  },
+  "#stateBorders": {
+    "opacity": 0.9,
+    "stroke": "#8b4513",
+    "stroke-width": 1.2,
+    "stroke-dasharray": null,
+    "stroke-linecap": "butt",
+    "filter": null
+  },
+  "#provinceBorders": {
+    "opacity": 0.6,
+    "stroke": "#a0826d",
+    "stroke-width": 0.3,
+    "stroke-dasharray": "2 1",
+    "stroke-linecap": "butt",
+    "filter": null
+  },
+  "#cells": {
+    "opacity": null,
+    "stroke": "#8b7355",
+    "stroke-width": 0.1,
+    "filter": null,
+    "mask": null
+  },
+  "#gridOverlay": {
+    "opacity": 0.5,
+    "scale": 1,
+    "dx": 0,
+    "dy": 0,
+    "type": "pointyHex",
+    "stroke": "#8b7355",
+    "stroke-width": 0.4,
+    "stroke-dasharray": null,
+    "stroke-linecap": null,
+    "transform": null,
+    "filter": null,
+    "mask": null
+  },
+  "#coordinates": {
+    "opacity": 1,
+    "data-size": 12,
+    "font-size": 12,
+    "stroke": "#6b5d4f",
+    "stroke-width": 1,
+    "stroke-dasharray": 5,
+    "stroke-linecap": null,
+    "filter": null,
+    "mask": null
+  },
+  "#compass": {
+    "opacity": 0.6,
+    "transform": null,
+    "filter": "url(#filter-sepia)",
+    "mask": "url(#water)",
+    "shape-rendering": "optimizespeed"
+  },
+  "#compass > use": {
+    "transform": "translate(80 80) scale(0.25)"
+  },
+  "#relig": {
+    "opacity": 0.75,
+    "stroke": "#654321",
+    "stroke-width": 0.8,
+    "filter": null
+  },
+  "#cults": {
+    "opacity": 0.65,
+    "stroke": "#8b7355",
+    "stroke-width": 0.6,
+    "stroke-dasharray": null,
+    "stroke-linecap": null,
+    "filter": null
+  },
+  "#landmass": {
+    "opacity": 1,
+    "fill": "#e8dcc0",
+    "filter": null
+  },
+  "#markers": {
+    "opacity": null,
+    "rescale": 1,
+    "filter": null
+  },
+  "#prec": {
+    "opacity": null,
+    "stroke": "#3d2817",
+    "stroke-width": 0.1,
+    "fill": "#4a90b8",
+    "filter": null
+  },
+  "#population": {
+    "opacity": null,
+    "stroke-width": 1.6,
+    "stroke-dasharray": null,
+    "stroke-linecap": "butt",
+    "filter": null
+  },
+  "#rural": {
+    "stroke": "#4a90b8"
+  },
+  "#urban": {
+    "stroke": "#d2691e"
+  },
+  "#freshwater": {
+    "opacity": 0.7,
+    "fill": "#7ba5c8",
+    "stroke": "#6b8ca8",
+    "stroke-width": 0.8,
+    "filter": null
+  },
+  "#salt": {
+    "opacity": 0.6,
+    "fill": "#5a8db8",
+    "stroke": "#4a7da8",
+    "stroke-width": 0.8,
+    "filter": null
+  },
+  "#sinkhole": {
+    "opacity": 1,
+    "fill": "#8ba8c8",
+    "stroke": "#7b98b8",
+    "stroke-width": 0.7,
+    "filter": null
+  },
+  "#frozen": {
+    "opacity": 0.95,
+    "fill": "#d5dce8",
+    "stroke": "#c5ccd8",
+    "stroke-width": 0,
+    "filter": null
+  },
+  "#lava": {
+    "opacity": 0.75,
+    "fill": "#9a3e08",
+    "stroke": "#7a2e00",
+    "stroke-width": 2,
+    "filter": "url(#paper)"
+  },
+  "#dry": {
+    "opacity": 0.75,
+    "fill": "#d4b896",
+    "stroke": "#b49876",
+    "stroke-width": 0.8,
+    "filter": null
+  },
+  "#sea_island": {
+    "opacity": 0.6,
+    "stroke": "#3d5d6f",
+    "stroke-width": 0.8,
+    "filter": "url(#dropShadow)",
+    "auto-filter": 1
+  },
+  "#lake_island": {
+    "opacity": 1,
+    "stroke": "#6b8ca8",
+    "stroke-width": 0.4,
+    "filter": null
+  },
+  "#terrain": {
+    "opacity": 1,
+    "set": "simple",
+    "size": 1,
+    "density": 0.5,
+    "filter": null,
+    "mask": null
+  },
+  "#rivers": {
+    "opacity": null,
+    "filter": "",
+    "fill": "#5a8db8"
+  },
+  "#ruler": {
+    "opacity": null,
+    "filter": null
+  },
+  "#roads": {
+    "opacity": 0.8,
+    "stroke": "#8b6914",
+    "stroke-width": 1.2,
+    "stroke-dasharray": null,
+    "stroke-linecap": "inherit",
+    "filter": "",
+    "mask": null
+  },
+  "#trails": {
+    "opacity": 0.65,
+    "stroke": "#9b7924",
+    "stroke-width": 0.6,
+    "stroke-dasharray": "2 3",
+    "stroke-linecap": "butt",
+    "filter": null,
+    "mask": null
+  },
+  "#searoutes": {
+    "opacity": 0.7,
+    "stroke": "#6b5d4f",
+    "stroke-width": 0.9,
+    "stroke-dasharray": "2 2",
+    "stroke-linecap": "round",
+    "filter": null,
+    "mask": null
+  },
+  "#statesBody": {
+    "opacity": 0.25,
+    "filter": "url(#filter-sepia)"
+  },
+  "#statesHalo": {
+    "opacity": 0.45,
+    "data-width": 10,
+    "stroke-width": 10,
+    "filter": "blur(6px)"
+  },
+  "#provs": {
+    "opacity": 0.75,
+    "fill": "#3d2817",
+    "font-size": 10,
+    "font-family": "Georgia",
+    "filter": null
+  },
+  "#temperature": {
+    "opacity": null,
+    "font-size": "8px",
+    "fill": "#3d2817",
+    "fill-opacity": 0.3,
+    "stroke": null,
+    "stroke-width": 1.8,
+    "stroke-dasharray": null,
+    "stroke-linecap": null,
+    "filter": null
+  },
+  "#ice": {
+    "opacity": 0.4,
+    "fill": "#e8f0f6",
+    "stroke": "#d8e0e6",
+    "stroke-width": 3,
+    "filter": "url(#dropShadow05)"
+  },
+  "#emblems": {
+    "opacity": 0.85,
+    "stroke-width": 0.9,
+    "filter": "url(#dropShadow05)"
+  },
+  "#emblems > #stateEmblems": {
+    "data-size": 1
+  },
+  "#emblems > #provinceEmblems": {
+    "data-size": 1
+  },
+  "#emblems > #burgEmblems": {
+    "data-size": 1
+  },
+  "#texture": {
+    "opacity": 0.7,
+    "filter": "",
+    "mask": "",
+    "data-x": 0,
+    "data-y": 0,
+    "data-href": "./images/textures/antique-small.jpg"
+  },
+  "#zones": {
+    "opacity": 0.6,
+    "stroke": "#654321",
+    "stroke-width": 0,
+    "stroke-dasharray": null,
+    "stroke-linecap": "butt",
+    "filter": null,
+    "mask": null
+  },
+  "#oceanLayers": {
+    "filter": "",
+    "layers": "-6,-4,-2"
+  },
+  "#oceanBase": {
+    "fill": "#a8c8d8"
+  },
+  "#oceanicPattern": {
+    "href": "./images/kiwiroo.png",
+    "opacity": 0.35
+  },
+  "#terrs > #oceanHeights": {
+    "data-render": 0,
+    "opacity": 1,
+    "scheme": "light",
+    "terracing": 0,
+    "skip": 0,
+    "relax": 1,
+    "curve": "curveBasisClosed",
+    "filter": "url(#filter-sepia)",
+    "mask": null
+  },
+  "#terrs > #landHeights": {
+    "opacity": 1,
+    "scheme": "light",
+    "terracing": 0,
+    "skip": 2,
+    "relax": 1,
+    "curve": "curveBasisClosed",
+    "filter": "url(#filter-sepia)",
+    "mask": "url(#land)"
+  },
+  "#legend": {
+    "data-size": 13,
+    "font-size": 13,
+    "font-family": "Almendra SC",
+    "stroke": "#654321",
+    "stroke-width": 2.5,
+    "stroke-dasharray": "0 4 10 4",
+    "stroke-linecap": "round",
+    "data-x": 99,
+    "data-y": 93,
+    "data-columns": 8
+  },
+  "#burgLabels > #cities": {
+    "opacity": 1,
+    "fill": "#3d2817",
+    "text-shadow": "#e8dcc0 0px 0px 4px",
+    "letter-spacing": 0,
+    "data-size": 12,
+    "font-size": 12,
+    "font-family": "Papyrus"
+  },
+  "#burgIcons > #cities": {
+    "opacity": 1,
+    "fill": "#d4b896",
+    "fill-opacity": 0.8,
+    "size": 1,
+    "stroke": "#654321",
+    "stroke-width": 0.4,
+    "stroke-dasharray": null,
+    "stroke-linecap": "butt"
+  },
+  "#anchors > #cities": {
+    "opacity": 1,
+    "fill": "#ffffff",
+    "size": 2,
+    "stroke": "#3d2817",
+    "stroke-width": 1.2
+  },
+  "#burgLabels > #towns": {
+    "opacity": 1,
+    "fill": "#3d2817",
+    "text-shadow": "#e8dcc0 0px 0px 4px",
+    "letter-spacing": 0,
+    "data-size": 5,
+    "font-size": 5,
+    "font-family": "Papyrus"
+  },
+  "#burgIcons > #towns": {
+    "opacity": 1,
+    "fill": "#d4b896",
+    "fill-opacity": 0.75,
+    "size": 0.5,
+    "stroke": "#654321",
+    "stroke-width": 0.15,
+    "stroke-dasharray": "",
+    "stroke-linecap": "butt"
+  },
+  "#anchors > #towns": {
+    "opacity": 1,
+    "fill": "#ffffff",
+    "size": 1,
+    "stroke": "#3d2817",
+    "stroke-width": 1.2
+  },
+  "#labels > #states": {
+    "opacity": 1,
+    "fill": "#3d2817",
+    "stroke": "#654321",
+    "stroke-width": 0.3,
+    "text-shadow": "#e8dcc0 0px 0px 5px",
+    "letter-spacing": 1,
+    "data-size": 22,
+    "font-size": 22,
+    "font-family": "Cinzel Decorative",
+    "filter": "url(#filter-sepia)"
+  },
+  "#labels > #addedLabels": {
+    "opacity": 1,
+    "fill": "#3d2817",
+    "stroke": "#654321",
+    "stroke-width": 0,
+    "text-shadow": "#e8dcc0 0px 0px 4px",
+    "letter-spacing": 0,
+    "data-size": 18,
+    "font-size": 18,
+    "font-family": "Times New Roman",
+    "filter": "url(#filter-sepia)"
+  },
+  "#fogging": {
+    "opacity": 0.98,
+    "fill": "#5d4d3f",
+    "filter": null
+  },
+  "#vignette": {
+    "opacity": 0.3,
+    "fill": "#3d2817",
+    "filter": ""
+  },
+  "#vignette-rect": {
+    "x": "0%",
+    "y": "0%",
+    "width": "100%",
+    "height": "100%",
+    "rx": "0%",
+    "ry": "0%",
+    "filter": "blur(50px)"
+  },
+  "#scaleBar": {
+    "opacity": 1,
+    "fill": "#3d2817",
+    "font-size": 10,
+    "data-bar-size": 2,
+    "data-x": 99,
+    "data-y": 99,
+    "data-label": ""
+  },
+  "#scaleBarBack": {
+    "opacity": 0,
+    "fill": "#e8dcc0",
+    "stroke": "#3d2817",
+    "stroke-width": 1,
+    "filter": "url(#blur5)",
+    "data-top": 20,
+    "data-right": 15,
+    "data-bottom": 15,
+    "data-left": 10
+  }
+}

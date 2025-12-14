@@ -251,6 +251,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   restoreDefaultEvents(); // apply default viewbox events
   initiateAutosave();
+  
+  // Initialize historical controls UI
+  if (window.HistoricalControls) {
+    HistoricalControls.init();
+  }
 });
 
 function hideLoading() {
@@ -1319,6 +1324,12 @@ function handleMapModeChange(mode) {
       culturesSetSelect.value = "antique";
     }
     
+    // Show historical controls and apply appropriate style
+    if (window.HistoricalControls) {
+      HistoricalControls.showHistoricalControls();
+      HistoricalControls.applyHistoricalStyle();
+    }
+    
     INFO && console.log("Switched to Historical Mode");
   } else {
     historicalPeriodRow.style.display = "none";
@@ -1326,6 +1337,11 @@ function handleMapModeChange(mode) {
     
     if (window.HistoricalMode) {
       window.HistoricalMode.disable();
+    }
+    
+    // Hide historical controls
+    if (window.HistoricalControls) {
+      HistoricalControls.hideHistoricalControls();
     }
     
     INFO && console.log("Switched to Fantasy Mode");

@@ -4,6 +4,8 @@
 const systemPresets = [
   "default",
   "ancient",
+  "historical-bronze",
+  "historical-classical",
   "gloom",
   "pale",
   "light",
