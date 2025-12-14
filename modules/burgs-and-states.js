@@ -71,6 +71,12 @@ window.BurgsAndStates = (() => {
     // For each capital create a state
     function createStates() {
       TIME && console.time("createStates");
+      
+      // Check if historical mode is active
+      if (window.HistoricalMode && window.HistoricalMode.isEnabled()) {
+        return createHistoricalStates();
+      }
+      
       const states = [{i: 0, name: "Neutrals"}];
       const colors = getColors(burgs.length - 1);
       const each5th = each(5);
@@ -108,6 +114,101 @@ window.BurgsAndStates = (() => {
       });
 
       TIME && console.timeEnd("createStates");
+      return states;
+    }
+
+    // Create states using historical civilization rules
+    function createHistoricalStates() {
+      TIME && console.time("createHistoricalStates");
+      const states = [{i: 0, name: "Neutrals"}];
+      const colors = getColors(burgs.length - 1);
+      const each5th = each(5);
+
+      // Get selected civilizations from HistoricalMode
+      const selectedCivs = window.HistoricalMode.getSelectedCivilizations();
+      const loadedCivs = window.HistoricalMode.getLoadedCivilizations();
+
+      burgs.forEach((b, i) => {
+        if (!i) return; // skip first element
+
+        // burgs data
+        b.i = b.state = i;
+        b.culture = cells.culture[b.cell];
+        b.name = Names.getCultureShort(b.culture);
+        b.feature = cells.f[b.cell];
+        b.capital = 1;
+
+        // Determine civilization for this state based on culture
+        const cultureCiv = cultures[b.culture].civilization;
+        let civilization = null;
+        
+        if (cultureCiv && loadedCivs[cultureCiv]) {
+          civilization = loadedCivs[cultureCiv];
+        } else if (selectedCivs.length > 0) {
+          // Fallback: assign random civilization from selected
+          const randomCivId = selectedCivs[Math.floor(Math.random() * selectedCivs.length)];
+          civilization = loadedCivs[randomCivId];
+        }
+
+        // Generate state configuration using PoliticalSystems
+        let stateConfig = null;
+        let governmentType = "monarchy"; // default
+        
+        if (civilization && window.PoliticalSystems) {
+          stateConfig = window.PoliticalSystems.generateStateConfig(civilization);
+          governmentType = stateConfig.governmentType;
+        }
+
+        // Use civilization-specific state properties
+        let expansionism;
+        if (stateConfig) {
+          expansionism = rn(stateConfig.expansionism * byId("sizeVariety").value, 1);
+        } else {
+          expansionism = rn(Math.random() * byId("sizeVariety").value + 1, 1);
+        }
+
+        // Generate state name
+        const basename = b.name.length < 9 && each5th(b.cell) ? b.name : Names.getCultureShort(b.culture);
+        const name = Names.getState(basename, b.culture);
+        const type = cultures[b.culture].type;
+
+        const coa = COA.generate(null, null, null, type);
+        coa.shield = COA.getShield(b.culture, null);
+
+        const state = {
+          i,
+          color: colors[i - 1],
+          name,
+          expansionism,
+          capital: i,
+          type,
+          center: b.cell,
+          culture: b.culture,
+          coa,
+          // Historical additions
+          governmentType: governmentType,
+          civilization: civilization ? civilization.id : null
+        };
+
+        // Add government-specific properties
+        if (stateConfig) {
+          state.maxSize = stateConfig.maxSize;
+          state.hasProvinces = stateConfig.hasProvinces;
+          state.capitalFocus = stateConfig.capitalFocus;
+        }
+
+        states.push(state);
+        cells.burg[b.cell] = i;
+
+        // Create dynasty for this state
+        if (civilization && window.DynastyTracker) {
+          window.DynastyTracker.createDynasty(i, civilization, pack.time || 0);
+        }
+      });
+
+      TIME && console.timeEnd("createHistoricalStates");
+      INFO && console.log(`Created ${states.length - 1} historical states`);
+      
       return states;
     }
 
@@ -289,6 +390,10 @@ window.BurgsAndStates = (() => {
 
     const queue = new FlatQueue();
     const cost = [];
+    
+    // Track state sizes for historical mode constraints
+    const stateSizes = {};
+    const isHistoricalMode = window.HistoricalMode && window.HistoricalMode.isEnabled();
 
     const globalGrowthRate = byId("growthRate").valueAsNumber || 1;
     const statesGrowthRate = byId("statesGrowthRate")?.valueAsNumber || 1;
@@ -310,6 +415,7 @@ window.BurgsAndStates = (() => {
       const b = cells.biome[cultureCenter]; // state native biome
       queue.push({e: state.center, p: 0, s: state.i, b}, 0);
       cost[state.center] = 1;
+      stateSizes[state.i] = 1; // Initialize size counter
     }
 
     while (queue.length) {
@@ -323,6 +429,11 @@ window.BurgsAndStates = (() => {
         if (state.lock) return; // do not overwrite cell of locked states
         if (cells.state[e] && e === state.center) return; // do not overwrite capital cells
 
+        // Check historical state size constraints
+        if (isHistoricalMode && states[s].maxSize) {
+          if (stateSizes[s] >= states[s].maxSize) return; // State reached max size
+        }
+
         const cultureCost = culture === cells.culture[e] ? -9 : 100;
         const populationCost = cells.h[e] < 20 ? 0 : cells.s[e] ? Math.max(20 - cells.s[e], 0) : 5000;
         const biomeCost = getBiomeCost(b, cells.biome[e], type);
@@ -335,7 +446,10 @@ window.BurgsAndStates = (() => {
         if (totalCost > growthRate) return;
 
         if (!cost[e] || totalCost < cost[e]) {
-          if (cells.h[e] >= 20) cells.state[e] = s; // assign state to cell
+          if (cells.h[e] >= 20) {
+            cells.state[e] = s; // assign state to cell
+            stateSizes[s] = (stateSizes[s] || 0) + 1; // Track state size
+          }
           cost[e] = totalCost;
           queue.push({e, p: totalCost, s, b}, totalCost);
         }
