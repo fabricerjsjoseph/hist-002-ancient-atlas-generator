@@ -275,7 +275,8 @@ window.DynastyTracker = (function() {
       const dynasty = dynasties[stateId];
       if (!dynasty) return null;
       
-      const currentYear = pack && pack.time ? pack.time : 0;
+      // Safely access pack.time with null check
+      const currentYear = (typeof pack !== 'undefined' && pack && pack.time) ? pack.time : 0;
       const age = currentYear - dynasty.foundingYear;
       
       return {

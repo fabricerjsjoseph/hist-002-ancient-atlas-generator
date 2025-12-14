@@ -64,7 +64,10 @@ function editBurg(id) {
     
     // Display dynasty information if in historical mode
     const dynastyInfoDiv = byId("burgDynastyInfo");
-    if (window.HistoricalMode && window.HistoricalMode.isEnabled() && window.DynastyTracker) {
+    const isHistoricalMode = window.HistoricalMode && window.HistoricalMode.isEnabled();
+    const hasDynastyTracker = typeof window.DynastyTracker !== 'undefined';
+    
+    if (isHistoricalMode && hasDynastyTracker) {
       const dynasty = window.DynastyTracker.getDynasty(b.state);
       if (dynasty && dynasty.isActive) {
         const ruler = window.DynastyTracker.getCurrentRuler(b.state);

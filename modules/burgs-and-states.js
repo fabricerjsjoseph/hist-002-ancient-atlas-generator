@@ -587,6 +587,8 @@ window.BurgsAndStates = (() => {
   };
   
   // Calculate tribute extracted by suzerain states from vassals
+  // In the diplomacy array: if state[s].diplomacy[targetId] === "Suzerain",
+  // it means state `s` is the suzerain (overlord) and `targetId` is the vassal (subject)
   const calculateTribute = () => {
     const {states} = pack;
     
@@ -596,16 +598,17 @@ window.BurgsAndStates = (() => {
       s.tributeIncome = 0;
       s.tributePaid = 0;
       
-      // Check if this state has vassals
+      // Check if this state is a suzerain with vassals
       if (s.diplomacy) {
         s.diplomacy.forEach((relation, targetId) => {
+          // If s.diplomacy[targetId] === "Suzerain", then s is overlord of targetId
           if (relation === "Suzerain" && states[targetId] && !states[targetId].removed) {
-            // Calculate tribute from vassal
-            const vassal = states[targetId];
+            // targetId is the vassal state paying tribute to s (the suzerain)
+            const vassalState = states[targetId];
             const tributeRate = window.PoliticalSystems.getTributeProbability(s.governmentType || "monarchy");
-            const tributeAmount = Math.floor((vassal.rural + vassal.urban) * tributeRate * 0.1);
-            s.tributeIncome += tributeAmount;
-            vassal.tributePaid = tributeAmount;
+            const tributeAmount = Math.floor((vassalState.rural + vassalState.urban) * tributeRate * 0.1);
+            s.tributeIncome += tributeAmount; // Suzerain receives tribute
+            vassalState.tributePaid = tributeAmount; // Vassal pays tribute
           }
         });
       }
