@@ -102,7 +102,7 @@ Based on the review, the implementation plan remains sound. Here are specific re
 | **5** | 9-10 | Religion & Society | Historical pantheons, temples, religious spread | ✅ COMPLETE |
 | **6** | 11-12 | Military & Warfare | Ancient units (chariots, phalanx, legions), fortifications | ✅ COMPLETE |
 | **7** | 13-14 | UI & Visualization | Historical mode UI, ancient cartography aesthetics | ✅ COMPLETE |
-| **8** | 15-16 | Specialized Features | Events, dynamic borders, dynasties, archaeology | 🔲 Pending |
+| **8** | 15-16 | Specialized Features | Events, dynamic borders, dynasties, archaeology | ✅ COMPLETE |
 | **9** | 17-18 | Presets & Templates | Quick-start historical maps, documentation | 🔲 Pending |
 | **10** | 19-20 | Testing & Polish | Accuracy review, optimization, community feedback | 🔲 Pending |
 
@@ -399,22 +399,108 @@ Based on the review, the implementation plan remains sound. Here are specific re
 - ✅ Server startup successful
 - ✅ File integrity verified
 
+## Phase 8 Implementation Details (✅ COMPLETE)
+
+### Files Created (Phase 8)
+- ✅ `modules/historical-events.js` - Historical events system
+- ✅ `modules/timeline-simulator.js` - Dynamic borders timeline
+- ✅ `modules/archaeology.js` - Archaeological sites
+
+### Files Modified (Phase 8)
+- ✅ `index.html` - Added Phase 8 module script tags and UI panels
+- ✅ `main.js` - Integrated Phase 8 modules into generation pipeline
+- ✅ `modules/ui/historical-controls.js` - Added controls for events, archaeology, and timeline
+- ✅ `versioning.js` - Updated to v1.108.19
+
+### What Was Implemented
+
+1. **Historical Events Module** (`modules/historical-events.js`)
+   - **10 Event Types**: war, migration, conquest, plague, famine, rebellion, natural disaster, city foundation, alliance, dynasty change
+   - **Event Generation**: Frequency-based probability with period-aware adjustments
+   - **Event Tracking**: Complete history with statistics
+   - **State-Based Logic**: Adjusts event probability based on state size, neighbors, and diplomacy
+   - **API Functions**:
+     - `generateEvent(year, options)` - Generate single event
+     - `generateEventsForPeriod(startYear, endYear, eventsPerYear)` - Bulk generation
+     - `getAllEvents()`, `getEventsForYear()`, `getEventsForState()`, `getEventsByType()`
+     - `getStatistics()` - Comprehensive event statistics
+
+2. **Timeline Simulator Module** (`modules/timeline-simulator.js`)
+   - **State Snapshot System**: Capture and restore complete state borders
+   - **Timeline Management**: Year range from -3000 to 500 CE
+   - **Playback Controls**: Play, stop, advance, reverse with configurable speed
+   - **Territorial Tracking**: Record border changes over time per state
+   - **Snapshot Interpolation**: Framework for smooth transitions between years
+   - **API Functions**:
+     - `initialize(options)`, `getCurrentYear()`, `setCurrentYear(year)`
+     - `play(speed)`, `stop()`, `advance(years)`, `reverse(years)`, `reset()`
+     - `captureSnapshot(year)`, `getSnapshotForYear(year)`
+     - `recordTerritorialChange(stateId, year, territories)`
+     - `generateIntermediateSnapshots(year1, year2, steps)`
+
+3. **Archaeology Module** (`modules/archaeology.js`)
+   - **15 Site Types**: Ancient ruins, lost cities, pyramids, ziggurats, temples, fortresses, necropolises, palaces, sacred sites, amphitheaters, aqueducts, stone circles, burial mounds, mines, petroglyphs
+   - **Terrain-Aware Placement**: Desert, river, highland requirements
+   - **Age & Decay Mechanics**: Sites age from 400-3000 years with condition states
+   - **Civilization-Specific**: Sites linked to historical civilizations with appropriate types
+   - **Major/Minor Classification**: Importance-based categorization
+   - **Map Integration**: Places sites as markers on map
+   - **API Functions**:
+     - `generateSite(siteType, options)`, `generateSites(count, options)`
+     - `generateFromFallenCivilizations()` - Civilization-specific site generation
+     - `placeAsMarkers()` - Add sites to map marker system
+     - `getAllSites()`, `getSitesByType()`, `getSitesByCivilization()`, `getMajorSites()`
+     - `getStatistics()` - Site statistics and metrics
+
+4. **UI Controls Extension** (in `modules/ui/historical-controls.js`)
+   - **Events Panel**:
+     - Display recent historical events with icons
+     - Show event details (name, year, description)
+     - Event statistics summary
+   - **Archaeology Panel**:
+     - List archaeological sites by importance
+     - Display site age and condition
+     - Major/minor site breakdown
+   - **Timeline Control Panel**:
+     - Interactive year slider (-3000 to 500 CE)
+     - Real-time year display
+     - Playback controls (Play, Stop, Reset)
+     - Integration with TimelineSimulator module
+   - **Button Controls**: Added Events and Archaeology buttons to historical controls
+
+5. **Integration** (in `main.js` and `index.html`)
+   - Modules initialize during map generation setup
+   - Historical mode awareness: Phase 8 features only active in historical mode
+   - Automatic event generation for 500-year periods on map creation
+   - Archaeological site generation from fallen civilizations
+   - Timeline snapshot capture on map generation
+   - Proper module ordering and dependency management
+
+### Testing Performed
+- ✅ All Phase 8 modules load without errors
+- ✅ Module APIs verified functional
+- ✅ UI elements present and accessible
+- ✅ JavaScript syntax validation passed
+- ✅ Marker generation bug fixed (using reduce pattern)
+- ✅ No console errors on page load
+- ✅ Integration with historical mode verified
+
 ## Files to Create (Future Phases)
 
 ### Data Files (Completed)
 - ✅ `data/historical-pantheons.js`
 - ✅ `data/ancient-military-units.js`
 
-### Module Files (Pending)
+### Module Files (Completed)
 - ✅ `modules/political-systems.js` - Government types
 - ✅ `modules/dynasty-tracker.js` - Royal families
 - ✅ `modules/trade-routes.js` - Historical trade networks
 - ✅ `modules/ancient-landmarks.js` - Pyramids, ziggurats, etc.
 - ✅ `modules/religious-sites.js` - Temples, oracles
 - ✅ `modules/fortifications.js` - Ancient defensive structures
-- 🔲 `modules/historical-events.js` - Wars, migrations, etc.
-- 🔲 `modules/timeline-simulator.js` - Dynamic borders over time
-- 🔲 `modules/archaeology.js` - Ruins and lost cities
+- ✅ `modules/historical-events.js` - Wars, migrations, etc.
+- ✅ `modules/timeline-simulator.js` - Dynamic borders over time
+- ✅ `modules/archaeology.js` - Ruins and lost cities
 
 ## Key Files to Modify (Future Phases)
 
