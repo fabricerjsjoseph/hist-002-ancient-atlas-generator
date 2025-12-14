@@ -456,18 +456,23 @@ window.Religions = (function () {
     TIME && console.time("generateReligions");
     const lockedReligions = pack.religions?.filter(r => r.i && r.lock && !r.removed) || [];
 
-    const folkReligions = generateFolkReligions();
-    const organizedReligions = generateOrganizedReligions(+religionsNumber.value, lockedReligions);
+    // Check if historical mode is enabled
+    if (window.HistoricalMode && HistoricalMode.isEnabled()) {
+      generateHistoricalReligions(lockedReligions);
+    } else {
+      const folkReligions = generateFolkReligions();
+      const organizedReligions = generateOrganizedReligions(+religionsNumber.value, lockedReligions);
 
-    const namedReligions = specifyReligions([...folkReligions, ...organizedReligions]);
-    const indexedReligions = combineReligions(namedReligions, lockedReligions);
-    const religionIds = expandReligions(indexedReligions);
-    const religions = defineOrigins(religionIds, indexedReligions);
+      const namedReligions = specifyReligions([...folkReligions, ...organizedReligions]);
+      const indexedReligions = combineReligions(namedReligions, lockedReligions);
+      const religionIds = expandReligions(indexedReligions);
+      const religions = defineOrigins(religionIds, indexedReligions);
 
-    pack.religions = religions;
-    pack.cells.religion = religionIds;
+      pack.religions = religions;
+      pack.cells.religion = religionIds;
 
-    checkCenters();
+      checkCenters();
+    }
 
     TIME && console.timeEnd("generateReligions");
   }
@@ -476,6 +481,186 @@ window.Religions = (function () {
     return pack.cultures
       .filter(c => c.i && !c.removed)
       .map(culture => ({type: "Folk", form: rw(forms.Folk), culture: culture.i, center: culture.center}));
+  }
+
+  function generateHistoricalReligions(lockedReligions) {
+    INFO && console.log("Generating historical religions");
+    
+    const selectedCivs = HistoricalMode.getSelectedCivilizations();
+    if (!selectedCivs || selectedCivs.length === 0) {
+      WARN && console.warn("No civilizations selected for historical mode");
+      return;
+    }
+    
+    // Create religions based on civilizations
+    const newReligions = [];
+    const cells = pack.cells;
+    
+    // Get civilization data and pantheons
+    const civilizationData = {};
+    selectedCivs.forEach(civId => {
+      const civData = HistoricalMode.getCivilization(civId);
+      if (civData && window.HistoricalPantheons) {
+        const pantheon = HistoricalPantheons.getPantheon(civId);
+        if (pantheon) {
+          civilizationData[civId] = {civData, pantheon};
+        }
+      }
+    });
+    
+    // Map states to civilizations and create religions
+    pack.states.forEach((state, stateId) => {
+      if (!stateId || state.removed) return;
+      
+      const stateCulture = pack.cultures[state.culture];
+      if (!stateCulture) return;
+      
+      // Find matching civilization
+      const civId = findCivilizationForCulture(stateCulture, selectedCivs);
+      if (!civId || !civilizationData[civId]) return;
+      
+      const {civData, pantheon} = civilizationData[civId];
+      
+      // Get main deities for this state religion
+      const mainDeities = window.HistoricalPantheons.getTopDeities(civId, 3);
+      if (!mainDeities || mainDeities.length === 0) return;
+      
+      // Create religion name from primary deity
+      const primaryDeity = mainDeities[0];
+      const religionForm = pantheon.form || "Polytheism";
+      
+      // Create religion object
+      const religion = {
+        type: "Organized",
+        form: religionForm,
+        culture: state.culture,
+        center: state.center,
+        deity: primaryDeity.name,
+        pantheon: mainDeities.map(d => d.name).join(", "),
+        civilizationId: civId
+      };
+      
+      newReligions.push(religion);
+    });
+    
+    // Add folk religions for cultures without organized religion
+    const folkReligions = pack.cultures
+      .filter(c => c.i && !c.removed)
+      .filter(culture => {
+        // Check if this culture already has a religion from a state
+        const hasOrganizedReligion = newReligions.some(r => r.culture === culture.i);
+        return !hasOrganizedReligion;
+      })
+      .map(culture => ({
+        type: "Folk",
+        form: "Animism",
+        culture: culture.i,
+        center: culture.center
+      }));
+    
+    newReligions.push(...folkReligions);
+    
+    // Process religions using existing system
+    const namedReligions = specifyHistoricalReligions(newReligions);
+    const indexedReligions = combineReligions(namedReligions, lockedReligions);
+    const religionIds = expandReligions(indexedReligions);
+    const religions = defineOrigins(religionIds, indexedReligions);
+    
+    pack.religions = religions;
+    pack.cells.religion = religionIds;
+    
+    checkCenters();
+    
+    INFO && console.log(`Generated ${religions.length} historical religions`);
+  }
+  
+  // Name base to civilization mapping (from existing name generator system)
+  // These correspond to the name bases defined in modules/names-generator.js
+  const NAME_BASE_TO_CIV = {
+    8: "roman",      // Roman name base
+    7: "greek",      // Greek name base
+    42: "egyptian",  // Levantine name base (used by Egyptian)
+    18: "persian",   // Arabic name base (used by Persian)
+    11: "sumerian"   // Chinese name base (used by Sumerian as fallback)
+  };
+
+  function findCivilizationForCulture(culture, selectedCivs) {
+    let civId = NAME_BASE_TO_CIV[culture.base];
+    
+    // If no mapping found, try to match by culture name
+    if (!civId) {
+      const cultureName = culture.name?.toLowerCase() || "";
+      for (const civ of selectedCivs) {
+        if (cultureName.includes(civ)) {
+          civId = civ;
+          break;
+        }
+      }
+    }
+    
+    // If still no match, randomly assign from selected civs
+    if (!civId && selectedCivs.length > 0) {
+      civId = selectedCivs[Math.floor(Math.random() * selectedCivs.length)];
+    }
+    
+    return civId;
+  }
+  
+  function specifyHistoricalReligions(newReligions) {
+    const {cells, cultures} = pack;
+    
+    return newReligions.map(({type, form, culture: cultureId, center, deity, pantheon, civilizationId}) => {
+      // Use historical deity name if provided
+      const supreme = deity || getDeityName(cultureId);
+      const deityName = form === "Non-theism" || form === "Animism" ? null : supreme;
+      
+      // Generate religion name
+      let [name, expansion] = generateHistoricalReligionName(type, form, deityName, center, civilizationId);
+      
+      return {
+        type,
+        form,
+        culture: cultureId,
+        center,
+        deity: deityName,
+        name,
+        expansion
+        // Note: code will be generated by combineReligions
+      };
+    });
+  }
+  
+  function generateHistoricalReligionName(type, form, deity, center, civilizationId) {
+    const {cells, cultures, states, burgs} = pack;
+    
+    // Historical naming patterns
+    if (deity) {
+      const patterns = [
+        [`Cult of ${deity}`, "state"],
+        [`Worship of ${deity}`, "culture"],
+        [`${deity} Worship`, "culture"],
+        [`Faith of ${deity}`, "global"]
+      ];
+      
+      // Civilization-specific patterns
+      if (civilizationId === "roman") {
+        patterns.push([`${deity} Cult`, "state"]);
+        patterns.push([`Religio ${deity}`, "culture"]);
+      } else if (civilizationId === "greek") {
+        patterns.push([`Mysteries of ${deity}`, "culture"]);
+        patterns.push([`${deity}'s Sanctuary`, "state"]);
+      } else if (civilizationId === "egyptian") {
+        patterns.push([`House of ${deity}`, "culture"]);
+        patterns.push([`Path of ${deity}`, "culture"]);
+      }
+      
+      const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+      return pattern;
+    }
+    
+    // Fallback to generic naming
+    const culture = cultures[cells.culture[center]].name;
+    return [`${culture} ${form}`, "culture"];
   }
 
   function generateOrganizedReligions(desiredReligionNumber, lockedReligions) {

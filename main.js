@@ -658,6 +658,9 @@ async function generate(options) {
     if (window.TradeRoutes) TradeRoutes.initialize();
     if (window.AncientLandmarks) AncientLandmarks.initialize();
     
+    // Initialize Phase 5 modules
+    if (window.ReligiousSites) ReligiousSites.initialize();
+    
     BurgsAndStates.generate();
     Routes.generate();
     Religions.generate();
@@ -677,6 +680,12 @@ async function generate(options) {
     if (window.AncientLandmarks) {
       AncientLandmarks.generate();
       AncientLandmarks.addToMarkers();
+    }
+    
+    // Generate Phase 5 religious sites
+    if (window.ReligiousSites) {
+      ReligiousSites.generate();
+      ReligiousSites.addToMarkers();
     }
     
     Zones.generate();
